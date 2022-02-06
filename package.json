@@ -1,0 +1,39 @@
+{
+  "name": "snoopbot",
+  "version": "1.0.0",
+  "description": "SnoopBot is a facebook chat bot made using nodejs, axios and the unofficial facebook chat api.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SnoopyCodeX/snoopbot.git"
+  },
+  "keywords": [
+    "bot",
+    "chat",
+    "bot",
+    "messenger",
+    "facebook",
+    "chat",
+    "api"
+  ],
+  "author": "SnoopyCodeX, John Roy L. Calimlim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SnoopyCodeX/snoopbot/issues"
+  },
+  "homepage": "https://github.com/SnoopyCodeX/snoopbot#readme",
+  "dependencies": {
+    "axios": "^0.22.0",
+    "fca-unofficial": "^1.3.10",
+    "googlethis": "^1.2.7",
+    "got": "^11.8.2",
+    "memory-streams": "^0.1.3",
+    "mime": "^3.0.0",
+    "streamifier": "^0.1.1",
+    "youtube-music-api": "^1.0.6"
+  }
+}
