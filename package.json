@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "SnoopBot is a facebook chat bot made using nodejs, axios and the unofficial facebook chat api.",
   "main": "index.js",
+  "engines": {
+    "node": "17.4.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npm run build",
