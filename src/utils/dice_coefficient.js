@@ -1,7 +1,7 @@
 /// Computes the similarities between 2 given strings
 /// using the Dice Coefficient algorithm
 ///
-/// @source: https://wikipedia.com
+/// @source: https://wikipedia.com/dice coefficient
 module.exports = (string1, string2) => {
 	let first = string1.replace(/\s+/g, '');
 	let second = string2.replace(/\s+/g, '');

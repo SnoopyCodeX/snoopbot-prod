@@ -24,6 +24,12 @@ const getExt = (filetype) => {
 
 module.exports = (next) => {
 	return async (event, api) => {
+		if(!configs.ENABLE_ANTI_UNSEND) {
+		    await next(event, api);
+		
+		    return;
+	    }
+		
 		let jsonString = fs.readFileSync(configs.APP_PERMISSION_FILE, {encoding: "utf8"});
 		let admins = JSON.parse(jsonString);
 		

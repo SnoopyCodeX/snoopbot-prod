@@ -20,7 +20,7 @@ commands.addCommandMiddleware(
 );
 
 commands.add(command.download.tiktok, {
-	params: '^downloadTiktok\\s(.*)',
+	params: '^downloadTiktok\\s?(.*)?',
 	usage: configs.DEFAULT_PREFIX + "downloadTiktok <tiktok-video-url>",
 	description: "Downloads videos from the tiktok",
 	name: "downloadTiktok",
@@ -28,7 +28,7 @@ commands.add(command.download.tiktok, {
 });
 
 commands.add(command.play, {
-	params: '^play\\s(.*)',
+	params: '^play\\s?(.*)?',
 	usage: configs.DEFAULT_PREFIX + "play <song title>",
 	description: "Plays a song from youtube music and returns the lyrics of the song if there's any",
 	name: "play",
@@ -36,7 +36,7 @@ commands.add(command.play, {
 });
 
 commands.add(command.wiki, {
-	params: '^wiki\\s(.*)',
+	params: '^wiki\\s?(.*)?',
 	usage: configs.DEFAULT_PREFIX + "wiki <query>",
 	description: "Send a search query to Wikipedia's API",
 	name: "wiki",
@@ -52,7 +52,7 @@ commands.add(command.translate, {
 });
 
 commands.add(command.define, {
-	params: '^define\\s(.*)',
+	params: '^define\\s?(.*)?',
 	usage: configs.DEFAULT_PREFIX + "define <word>",
 	description: "Returns the definition of the word using Google Dictionary API",
 	name: "define",

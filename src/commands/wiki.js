@@ -11,12 +11,13 @@ const searchWiki = async (query) => {
 
 module.exports = async (matches, event, api, extra) => {
 	let query = matches[1];
+	console.log(matches);
 	
 	if(query === undefined) {
 		let stopTyping = api.sendTypingIndicator(event.threadID, (err) => {
 			if(err) return console.log(err);
 			
-			api.sendMessage(`⚠️ Invalid use of command: '${configs.DEFAULT_PREFIX}wiki'\n\nUsage: ${extra.option.usage}`, event.threadID, event.messageID);
+			api.sendMessage(`⚠️ Invalid use of command: '${configs.DEFAULT_PREFIX}wiki'\n\nUsage: ${extra.usage}`, event.threadID, event.messageID);
 			stopTyping();
 		});
 		

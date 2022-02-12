@@ -54,7 +54,7 @@ module.exports = async (matches, event, api, extra) => {
 		let stopTyping = api.sendTypingIndicator(event.threadID, (err) => {
 			if(err) return console.log(err);
 			
-			api.sendMessage(`⚠️ Invalid usage of command: ${configs.DEFAULT_PREFIX}define\n\nUsage: ${extra.option.usage}`, event.threadID, event.messageID);
+			api.sendMessage(`⚠️ Invalid usage of command: ${configs.DEFAULT_PREFIX}define\n\nUsage: ${extra.usage}`, event.threadID, event.messageID);
 			stopTyping();
 		});
 		
