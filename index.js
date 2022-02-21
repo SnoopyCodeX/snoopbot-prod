@@ -13,6 +13,8 @@ commands.addEventMiddleware(
     antiUnsendMiddleware
 );
 
+// Test changes sa akoang source code.
+
 commands.addCommandMiddleware(
     joinOrLeaveMiddleware,
     commandValidatorMiddleware,
