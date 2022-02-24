@@ -140,7 +140,7 @@ module.exports = async (matches, event, api, extra) => {
     
     let path = './temps/attachment-song.mp3';
     let file = fs.createWriteStream(path);
-    let stream = https.get(downloadURL, (res) => {
+    let stream = axios.get(downloadURL, (res) => {
     	res.pipe(file);
     
         file.on("finish", () => {
