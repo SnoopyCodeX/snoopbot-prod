@@ -25,6 +25,10 @@ const getDownloadUrl = async (videoId, options = {bitrate: 320, type: 'mp3'}) =>
 		    let tag = lst.attribs['data-mp3-tag'];
 		
 		    return `${serverURL}/download/${tag}/${title}.mp3`;
+		}).catch((err) => {
+			console.log(err);
+			
+			return undefined;
 		});
 	
 	return downloadURL;
