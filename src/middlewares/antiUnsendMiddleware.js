@@ -38,6 +38,7 @@ module.exports = (next) => {
 		let senderID = event.senderID;
 		let threadID = event.threadID;
 		let message = event.body;
+		let mentions = event.mentions;
 		
 		switch(event.type) {
 			case "message":
@@ -48,10 +49,12 @@ module.exports = (next) => {
 			
 			    if(message.length !== 0)
 			        if(msgs[messageID] !== undefined)
-			            for(let msg of msgs[messageID])
+			            for(let msg of msgs[messageID]) {
                             msg.msg = message;
+                            msg.mentions = mentions;
+                        }
 			        else
-			            msgs[messageID] = message;
+			            msgs[messageID] = {msg: message, mentions, normal: true};
 			
 			break;
 			
@@ -60,37 +63,75 @@ module.exports = (next) => {
 				// if(true) {
 				    let deletedMessages = msgs[messageID];
 				
-				    if(typeof (deletedMessages) !== "object") {
+				    if(deletedMessages.normal) {
 				        api.getUserInfo(senderID, (err, info) => {
 					        if(err) return console.log(err);
+					        
+					        // Include mentions
+					        let _mentions = [];
+					        for(let id in deletedMessages.mentions)
+						        _mentions.push({id, tag: deletedMessages.mentions[id]});
 					
 					        let user = info[senderID];
 					        let msg = {
-						        body: `🤭 @${user.firstName} unsent this message: \n\n${deletedMessages}\n\n🚧 Anti-Unsend by SnoopBot`,
+						        body: `🤭 @${user.firstName} unsent this message: \n\n${deletedMessages.msg}`,
 						        mentions: [{
 							        tag: `@${user.firstName}`,
 							        id: senderID
-						        }]
+						        }, ..._mentions]
 						    };
 						
 						    api.sendMessage(msg, threadID);
 					    });
 					}
 					else {
+						let shareDetected = false;
+						
 						// Loop through all deleted attachments
 						for(let deletedMessage of deletedMessages) {
 						    // For messages that contains, urls
 						    if(deletedMessage.type === "share") {
+							    shareDetected = true;
+							
+							    // For deleted live location
+							    if(deletedMessage.source === null) {
+								   api.getUserInfo(deletedMessage.target.sender.id, (err, info) => {
+								       if(err) return console.log(err);
+								
+								        let user = info[deletedMessage.target.sender.id];
+								        let latitude = deletedMessage.target.coordinate.latitude;
+								        let longitude = deletedMessage.target.coordinate.longitude;
+									    let msg = {
+										    body: ` @${user.firstName} unsent this live location: \n\n${deletedMessage.msg || ''}`,
+										    mentions: [{
+											    tag: `@${user.firstName}`,
+											    id: deletedMessage.target.sender.id
+											}],
+                                            location: {latitude, longitude}
+										};
+										
+										api.sendMessage(msg, threadID);
+									});
+									
+									continue;
+								}
+							
+							    // For deleted messages with urls
 							    api.getUserInfo(senderID, (err, info) => {
 								    if(err) return console.log(err);
 								
+								    // Include mentions
+								    let _mentions = [];
+								    for(let id in deletedMessage.mentions)
+								        _mentions.push({ id, tag: deletedMessage.mentions[id] });
+								
 						            let user = info[senderID];
 						            let msg = {
-						                body: `🤭 @${user.firstName} unsent this message: \n\n${deletedMessage.msg}\n\n Anti-Unsend by SnoopBot`,
+						                body: `🤭 @${user.firstName} unsent this message: \n\n${deletedMessage.msg}`,
 						                mentions: [{
 							                tag: `@${user.firstName}`,
 							                id: senderID
-						                }]
+						                }, ..._mentions]
 				                    };
 						            
 						            api.sendMessage(msg, threadID);
@@ -98,9 +139,41 @@ module.exports = (next) => {
 							    
 							    continue;
 						    }
+						
+						    // For deleted location
+						    if(deletedMessage.type === "location") {
+							    let longitude = deletedMessage.longitude;
+							    let latitude = deletedMessage.latitude;
+							    shareDetected = true;
+							    
+							    api.getUserInfo(senderID, (err, info) => {
+								    if(err) return console.log(err);
+								
+						            let user = info[senderID];
+						            let msg = {
+						                body: `🤭 @${user.firstName} unsent this location: \n\n${deletedMessage.msg || ''}`,
+						                mentions: [{
+							                tag: `@${user.firstName}`,
+							                id: senderID
+						                }],
+						                location: {latitude, longitude, current: false}
+				                    };
+						            
+						            api.sendMessage(msg, threadID);
+						        });
+							
+							    continue;
+							}
+						}
+						
+						// Stop here if user unsent a location
+						if(shareDetected) {
+							shareDetected = false;
+							return;
 						}
 						
 						let streams = [];
+						let _mentions = [];
 						for(let deletedMessage of deletedMessages) {
 						    console.log(deletedMessage);
 						
@@ -136,6 +209,10 @@ module.exports = (next) => {
                                     });
                                 }
                             }));
+                          
+                            // Include mentions  
+                            for(let id in deletedMessage.mentions)
+						        _mentions.push({id, tag: deletedMessage.mentions[id]});
 						}
 						
 						api.getUserInfo(senderID, (err, info) => {
@@ -147,7 +224,7 @@ module.exports = (next) => {
 						        mentions: [{
                                     tag: `@${user.firstName}`,
                                     id: senderID
-                                }],
+                                }, ..._mentions],
 						        attachment:  streams
 				            };
 						

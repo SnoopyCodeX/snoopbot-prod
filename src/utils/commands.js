@@ -33,12 +33,12 @@ const init = ( option = {} ) => {
 			const enableAntiUnsend = options.ENABLE_ANTI_UNSEND !== undefined ? options.ENABLE_ANTI_UNSEND : false;
 			const enableAutoGreet = options.ENABLE_AUTO_GREET !== undefined ? options.ENABLE_AUTO_GREET : false;
 			
-			api.setOptions({listenEvents: true});
+			api.setOptions({ listenEvents: options.listenEvents || true, selfListen: options.selfListen || false });
 			
 			let listenEmitter = api.listen(async (err, event) => {
 				if(err) return console.error(err);
 				
-				fs.writeFile(options.APP_STATE_FILE, JSON.stringify(api.getAppState()), 
+				fs.writeFile(options.APP_STATE_FILE, JSON.stringify(api.getAppState(), undefined, 4), 
                    {encoding: "utf8"},
                    (err) => {  if(err) console.error(err); });
                
