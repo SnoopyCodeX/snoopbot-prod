@@ -13,7 +13,7 @@ const DiceCoefficient = require("../utils/dice_coefficient");
 *
 *  @videoId  ->  Youtube video id
 */
-const getDownloadUrl = async (videoId, options = {bitrate: 320, type: 'mp3'}) => {
+const getDownloadUrl = async (videoId, options = {bitrate: 320, type: 'mp3', title: ''}) => {
 	let serverURL = "https://api.vevioz.com";
 	
 	let downloadURL = await axios.get(`${serverURL}/?v=${videoId}&type=${options.type}&bitrate=${options.bitrate}`)
@@ -24,7 +24,7 @@ const getDownloadUrl = async (videoId, options = {bitrate: 320, type: 'mp3'}) =>
 		    let title = div.attribs['data-yt-title'];
 		    let tag = lst.attribs['data-mp3-tag'];
 		
-		    return `${serverURL}/download/${tag}/${title}.mp3`;
+		    return `${serverURL}/download/${tag}/${options.title || title}.mp3`;
 		}).catch((err) => {
 			console.log(err);
 			
@@ -123,7 +123,7 @@ module.exports = async (matches, event, api, extra) => {
 		let stopTyping = api.sendTypingIndicator(event.threadID, (err) => {
 			if(err) return console.log(err);
 			
-			api.sendMessage(`тЪая╕П Cannot play song: '${songQuery}'`, event.threadID, event.messageID);
+			api.sendMessage(`🚨 Cannot play song: '${songQuery}'`, event.threadID, event.messageID);
 			stopTyping();
 		});
 		
@@ -140,7 +140,7 @@ module.exports = async (matches, event, api, extra) => {
     
     let path = './temps/attachment-song.mp3';
     let file = fs.createWriteStream(path);
-    let stream = axios.get(downloadURL, (res) => {
+    let stream = https.get(downloadURL, (res) => {
     	res.pipe(file);
     
         file.on("finish", () => {
