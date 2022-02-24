@@ -1,62 +1,33 @@
 const fs = require("fs");
 const https = require("https");
+const cheerio = require("cheerio");
 const google = require("googlethis");
 const axios = require("axios");
 const configs = require("../../configs");
-const streams = require("stream");
 const YoutubeMusicAPI = require("youtube-music-api");
 const DiceCoefficient = require("../utils/dice_coefficient");
 
-const convert = async (videoId, token, expire) => {
-    const headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'X-Requested-Key': 'de0cfuirtgf67a'
-    };
-    
-    const response = await axios.post("https://backend.svcenter.xyz/api/convert-by-45fc4be8916916ba3b8d61dd6e0d6994", 
-            "v_id=" + videoId + 
-            "&ftype=mp3&fquality=128&token=" + token + 
-            "&timeExpire=" + expire + "&client=yt5s.com", 
-            { headers: headers })
-        .then((response) => {return response.data.d_url})
-        .catch((error) => {
-        	console.log(error);
-            return undefined;
-        });
-        
-    return response;
-};
-
-const fetch = async (query) => {
-    const headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    };
-    
-    const response = await axios.post("https://yt5s.com/api/ajaxSearch", 
-            "q=" + query + 
-            "&vt=mp3", 
-           { headers: headers })
-        .then((response) => {return response.data})
-        .catch((error) => {
-             console.log(error);
-             return undefined;
-         });
-         
-    return response;
-};
-
-const leechMP3 = async (videoID) => {
-	let response = await fetch(videoID).then((res) => {
-		if(res !== undefined && res.t < 1300) {
-			let downloadUrl = convert(res.vid, res.token, res.timeExpires).then((res) => {return [res, res.title]});
-			return downloadUrl;
-		}
-		
-		console.log(res);
-		return undefined;
-	});
+/*
+*  Converts youtube video to .mp3 or .mp4
+*  then returns the download url
+*
+*  @videoId  ->  Youtube video id
+*/
+const getDownloadUrl = async (videoId, options = {bitrate: 320, type: 'mp3'}) => {
+	let serverURL = "https://api.vevioz.com";
 	
-	return response;
+	let downloadURL = await axios.get(`${serverURL}/?v=${videoId}&type=${options.type}&bitrate=${options.bitrate}`)
+	    .then(response => {
+		    let $ = cheerio.load(response.data);
+		    let div = $("div#mediaDownload")[0];
+		    let lst = div.children[1].children[1].children[1];
+		    let title = div.attribs['data-yt-title'];
+		    let tag = lst.attribs['data-mp3-tag'];
+		
+		    return `${serverURL}/download/${tag}/${title}.mp3`;
+		});
+	
+	return downloadURL;
 };
 
 const getSongLyrics = async (song) => {
@@ -107,13 +78,13 @@ const getYTMusic = async (song) => {
 };
 
 module.exports = async (matches, event, api, extra) => {
-	let song = matches[1];
+	let songQuery = matches[1]; 
 	
-	if(song === undefined) {
+	if(songQuery === undefined) {
 		let stopTyping = api.sendTypingIndicator(event.threadID, (err) => {
 			if(err) return console.log(err);
 			
-			api.sendMessage(`⚠️ Invalid usage of command: ${configs.DEFAULT_PREFIX}play\n\nUsage: ${extra.usage}`, event.threadID, event.messageID);
+			api.sendMessage(`🛑 Invalid usage of command: ${configs.DEFAULT_PREFIX}play\n\nUsage: ${extra.usage}`, event.threadID, event.messageID);
 			stopTyping();
 		});
 		
@@ -127,41 +98,48 @@ module.exports = async (matches, event, api, extra) => {
 		stopTyping();
 	});
 	
-	let responseLyrics = await getSongLyrics(song);
-	let lyrics = responseLyrics.knowledge_panel.lyrics || "*No lyrics found*";
-	let title = responseLyrics.knowledge_panel.title === "N/A" ? "" : responseLyrics.knowledge_panel.title;
-	let type = responseLyrics.knowledge_panel.type || "";
+	// Get song lyrics from google
+	let lyricsRequest = await getSongLyrics(songQuery);
+	let lyricsResponse = lyricsRequest.knowledge_panel;
+	let lyrics = lyricsResponse.lyrics || "*No lyrics found*";
+	let title = lyricsResponse.title === "N/A" ? "" : lyricsResponse.title;
+	let author = lyricsResponse.type || "";
 	
-	let ytQuery = song;
-	if(song.lastIndexOf("by") === -1) 
-	    ytQuery = `${song} ${type.replace(/\b(Song )\b/g, '')}`;
+	// Indicate the song author if there's any
+	let ytSongQuery = songQuery;
+	if(songQuery.indexOf("by") === -1)
+	    ytSongQuery = `${songQuery} ${author.replace(/\b(Song )\b/g, "")}`;
 	
-	let ytVideo = await getYTMusic(ytQuery);
-	let downloadUrl = await leechMP3(ytVideo.videoId);
+	// Search the song on youtube and get download url
+	let songYTRequest = await getYTMusic(ytSongQuery);
+	let downloadURL = await getDownloadUrl(songYTRequest.videoId);
 	
-	if(downloadUrl === undefined) {
+	// Abort downloading and sending audio if no download url is returned
+	if(downloadURL === undefined) {
 		let stopTyping = api.sendTypingIndicator(event.threadID, (err) => {
 			if(err) return console.log(err);
 			
-			api.sendMessage(`⚠️ Cannot play song: '${song}'`, event.threadID, event.messageID);
+			api.sendMessage(`тЪая╕П Cannot play song: '${songQuery}'`, event.threadID, event.messageID);
 			stopTyping();
 		});
 		
 		return;
 	}
 	
+	// If title is not indicated on the lyrics
 	if(title.length === 0)
-	    title = downloadUrl[1] ?? ytVideo.name ?? `${song}?`;
+	    title = songYTRequest.name ?? `${songQuery}?`;
 	
-	let body = `💽 Playing ${title} ${type}\n\n${lyrics}`;
-	let msg = {body: body};
-	
-	let path = `./temps/attachment-song.mp3`;
-	let file = fs.createWriteStream(path);
-	let stream = https.get(downloadUrl[0], (res) => {
-		res.pipe(file);
-		
-		file.on("finish", () => {
+    // Download and send the audio back to the convo
+    let body = `📀 Playing ${title} ${author}\n\n${lyrics}`;
+    let msg = {body};
+    
+    let path = './temps/attachment-song.mp3';
+    let file = fs.createWriteStream(path);
+    let stream = https.get(downloadURL, (res) => {
+    	res.pipe(file);
+    
+        file.on("finish", () => {
 			msg.attachment = fs.createReadStream(path).on("end", async () => {
 		        if(fs.existsSync(path)) {
 			        fs.unlink(path, (err) => {
@@ -174,5 +152,5 @@ module.exports = async (matches, event, api, extra) => {
 	
 	        api.sendMessage(msg, event.threadID, event.messageID);
 		});
-	});
+    });
 };

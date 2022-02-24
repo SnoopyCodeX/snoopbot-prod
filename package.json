@@ -31,6 +31,7 @@
   "homepage": "https://github.com/SnoopyCodeX/snoopbot-prod#readme",
   "dependencies": {
     "axios": "^0.22.0",
+    "cheerio": "^1.0.0-rc.10",
     "fca-unofficial": "^1.3.10",
     "googlethis": "^1.2.7",
     "got": "^11.8.2",
