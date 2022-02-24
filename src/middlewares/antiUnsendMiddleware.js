@@ -89,6 +89,34 @@ module.exports = (next) => {
 						
 						// Loop through all deleted attachments
 						for(let deletedMessage of deletedMessages) {
+							// For deleted stickers
+							if(deletedMessage.type === "sticker") {
+								shareDetected = true;
+								
+								api.getUserInfo(senderID, (err, info) => {
+								    if(err) return console.log(err);
+								
+								    // Include mentions
+								    let _mentions = [];
+								    for(let id in deletedMessage.mentions)
+								        _mentions.push({ id, tag: deletedMessage.mentions[id] });
+								
+						            let user = info[senderID];
+						            let msg = {
+						                body: `🤭 @${user.firstName} unsent this sticker: \n\n${deletedMessage.msg}`,
+						                mentions: [{
+							                tag: `@${user.firstName}`,
+							                id: senderID
+						                }, ..._mentions],
+						                sticker: deletedMessage.stickerID
+				                    };
+						            
+						            api.sendMessage(msg, threadID);
+						        });
+								
+								continue;
+							}
+							
 						    // For messages that contains, urls
 						    if(deletedMessage.type === "share") {
 							    shareDetected = true;
@@ -107,7 +135,7 @@ module.exports = (next) => {
 											    tag: `@${user.firstName}`,
 											    id: deletedMessage.target.sender.id
 											}],
-                                            location: {latitude, longitude}
+                                            location: {latitude, longitude, current: false}
 										};
 										
 										api.sendMessage(msg, threadID);
@@ -131,7 +159,8 @@ module.exports = (next) => {
 						                mentions: [{
 							                tag: `@${user.firstName}`,
 							                id: senderID
-						                }, ..._mentions]
+						                }, ..._mentions],
+						                url: deletedMessage.url
 				                    };
 						            
 						            api.sendMessage(msg, threadID);
@@ -166,7 +195,7 @@ module.exports = (next) => {
 							}
 						}
 						
-						// Stop here if user unsent a location
+						// Stop here if user unsent a shared attachment
 						if(shareDetected) {
 							shareDetected = false;
 							return;
