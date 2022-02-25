@@ -26,7 +26,18 @@
                     "help",
                     "info",
                     "translate",
-                    "downloadTiktok"
+                    "downloadTiktok",
+                    "downloadTiktok",
+                    "play",
+                    "wiki",
+                    "translate",
+                    "define",
+                    "info",
+                    "help",
+                    "join",
+                    "leave",
+                    "permission-grant",
+                    "permission-revoke"
                 ]
             },
             "100004944040636": {
@@ -36,7 +47,18 @@
                     "help",
                     "info",
                     "translate",
-                    "downloadTiktok"
+                    "downloadTiktok",
+                    "downloadTiktok",
+                    "play",
+                    "wiki",
+                    "translate",
+                    "define",
+                    "info",
+                    "help",
+                    "join",
+                    "leave",
+                    "permission-grant",
+                    "permission-revoke"
                 ]
             },
             "100007138182586": {
@@ -46,7 +68,18 @@
                     "help",
                     "info",
                     "translate",
-                    "downloadTiktok"
+                    "downloadTiktok",
+                    "downloadTiktok",
+                    "play",
+                    "wiki",
+                    "translate",
+                    "define",
+                    "info",
+                    "help",
+                    "join",
+                    "leave",
+                    "permission-grant",
+                    "permission-revoke"
                 ]
             },
             "100010183657157": {
@@ -56,7 +89,18 @@
                     "help",
                     "info",
                     "translate",
-                    "downloadTiktok"
+                    "downloadTiktok",
+                    "downloadTiktok",
+                    "play",
+                    "wiki",
+                    "translate",
+                    "define",
+                    "info",
+                    "help",
+                    "join",
+                    "leave",
+                    "permission-grant",
+                    "permission-revoke"
                 ]
             },
             "100026964984369": {
@@ -66,7 +110,18 @@
                     "help",
                     "info",
                     "translate",
-                    "downloadTiktok"
+                    "downloadTiktok",
+                    "downloadTiktok",
+                    "play",
+                    "wiki",
+                    "translate",
+                    "define",
+                    "info",
+                    "help",
+                    "join",
+                    "leave",
+                    "permission-grant",
+                    "permission-revoke"
                 ]
             },
             "100068838854223": {
@@ -76,7 +131,18 @@
                     "help",
                     "info",
                     "translate",
-                    "downloadTiktok"
+                    "downloadTiktok",
+                    "downloadTiktok",
+                    "play",
+                    "wiki",
+                    "translate",
+                    "define",
+                    "info",
+                    "help",
+                    "join",
+                    "leave",
+                    "permission-grant",
+                    "permission-revoke"
                 ]
             },
             "100072775210895": {
@@ -86,7 +152,18 @@
                     "help",
                     "info",
                     "translate",
-                    "downloadTiktok"
+                    "downloadTiktok",
+                    "downloadTiktok",
+                    "play",
+                    "wiki",
+                    "translate",
+                    "define",
+                    "info",
+                    "help",
+                    "join",
+                    "leave",
+                    "permission-grant",
+                    "permission-revoke"
                 ]
             },
             "100072904532318": {
@@ -96,7 +173,18 @@
                     "help",
                     "info",
                     "translate",
-                    "downloadTiktok"
+                    "downloadTiktok",
+                    "downloadTiktok",
+                    "play",
+                    "wiki",
+                    "translate",
+                    "define",
+                    "info",
+                    "help",
+                    "join",
+                    "leave",
+                    "permission-grant",
+                    "permission-revoke"
                 ]
             },
             "100075857750335": {
@@ -106,7 +194,18 @@
                     "help",
                     "info",
                     "translate",
-                    "downloadTiktok"
+                    "downloadTiktok",
+                    "downloadTiktok",
+                    "play",
+                    "wiki",
+                    "translate",
+                    "define",
+                    "info",
+                    "help",
+                    "join",
+                    "leave",
+                    "permission-grant",
+                    "permission-revoke"
                 ]
             },
             "100077699681015": {
@@ -116,7 +215,33 @@
                     "help",
                     "info",
                     "translate",
-                    "downloadTiktok"
+                    "downloadTiktok",
+                    "downloadTiktok",
+                    "play",
+                    "wiki",
+                    "translate",
+                    "define",
+                    "info",
+                    "help",
+                    "join",
+                    "leave",
+                    "permission-grant",
+                    "permission-revoke"
+                ]
+            },
+            "100013310821837": {
+                "permissions": [
+                    "downloadTiktok",
+                    "play",
+                    "wiki",
+                    "translate",
+                    "define",
+                    "info",
+                    "help",
+                    "join",
+                    "leave",
+                    "permission-grant",
+                    "permission-revoke"
                 ]
             }
         }

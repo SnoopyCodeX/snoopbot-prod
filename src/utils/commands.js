@@ -2,6 +2,7 @@ const fs = require('fs');
 const login = require('fca-unofficial');
 const { multilineRegex } = require("./regex");
 const pipeline = require("./pipeline");
+const global = require("../../global");
 
 let commands = [];
 let commandMiddlewares = [];
@@ -45,7 +46,9 @@ const init = ( option = {} ) => {
                 const eventCallback = () => {
                      return async(event, api) => {};
                 };    
-                pipeline([...eventMiddlewares, eventCallback], event, api);
+                global.eventsQueue.enqueue(async () => {
+                   await pipeline([...eventMiddlewares, eventCallback], event, api);
+                });
 				
 				commands.forEach((command) => {
 					if(typeof (command.callback) === "function" && event.body !== undefined) {
@@ -69,7 +72,7 @@ const init = ( option = {} ) => {
                              : command.option.handleMatches;
                         
                         if((commandPrefix == _prefix_ && matches.length !== 0) || handleMatches) {
-                        	let extra = {...command.option, commands: list()};
+                        	let extra = {...command.option, commands: list(), global};
                         
                             const commandCallback = () => {
                                 return async (matches, event, api, extra) => {
