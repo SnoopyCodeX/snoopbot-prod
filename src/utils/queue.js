@@ -1,3 +1,5 @@
+const cp = require("child_process");
+
 class Queue {
     constructor(maxSimultaneously = 1, name = '') {
         this.maxSimultaneously = maxSimultaneously;
@@ -6,14 +8,10 @@ class Queue {
         this.__queue = [];
     }
     
-    length() {
-    	return this.__queue.length;
-    }
-    
     /** @param { () => Promise<T> } func 
      * @template T
      * @returns {Promise<T>}
-    */
+     
     async enqueue(func) {
         if(++this.__active > this.maxSimultaneously) {
             await new Promise(resolve => this.__queue.push(resolve));
@@ -33,6 +31,11 @@ class Queue {
             console.log(`${this.name}: ${this.__active} active`);
         }
     }
+    */
 }
+
+Queue.prototype.enqueue = async (func) => {
+	
+};
 
 module.exports = Queue;
