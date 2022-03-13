@@ -1,4 +1,4 @@
-const configs = require("../../configs.js");
+const configs = require("../../configs");
 const fs = require("fs");
 
 module.exports = async (matches, event, api, extra) => {

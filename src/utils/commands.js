@@ -3,6 +3,7 @@ const login = require('fca-unofficial');
 const { multilineRegex } = require("./regex");
 const pipeline = require("./pipeline");
 const global = require("../../global");
+const configs = require("../../configs");
 
 let commands = [];
 let commandMiddlewares = [];
