@@ -48,45 +48,45 @@ module.exports = (next) => {
                         return;
 
                     // Get settings for this specific thread
-                    let settingsList = openSettings();
-                    if(settingsList.threads[event.threadID] === undefined)
-                        settingsList.threads[event.threadID] = settingsList.defaultSettings;
+                    let settingsList1 = openSettings();
+                    if(settingsList1.threads[event.threadID] === undefined)
+                        settingsList1.threads[event.threadID] = settingsList1.defaultSettings;
                     
-                    saveSettings(settingsList);
-                    let settings = settingsList.threads[event.threadID];
+                    saveSettings(settingsList1);
+                    let settings1 = settingsList1.threads[event.threadID];
                     
-                    let threadName = thread1.threadName;
-                    let participants = thread1.userInfo;
-                    let addedParticipants = event.logMessageData.addedParticipants;
-                    let botID = await api.getCurrentUserID();
-                    let message = {mentions: [], body: ""};
+                    let threadName1 = thread1.threadName;
+                    let participants1 = thread1.userInfo;
+                    let addedParticipants1 = event.logMessageData.addedParticipants;
+                    let botID1 = await api.getCurrentUserID();
+                    let message1 = {mentions: [], body: ""};
 
                     // Loop through all added participants
-                    for(let newParticipant of addedParticipants) {
+                    for(let newParticipant of addedParticipants1) {
                         // If the added participant is the bot itself, just send a greeting message then break this loop.
-                        if(newParticipant.userFbId == botID) {
-                            message.body = `Hi, I am SnoopBot. Thank you for having me as the ${toOrdinalNumber(participants.length)} member of "${threadName}".\n\n`;
-                            message.body += `Type ${settings.prefix}help to see the list  of available commands. Please remember to not spam the bot to avoid the bot from being muted by fb. Thank you for your kind understanding! <3\n\n~Author: @John Roy Lapida Calimlim`;
-                            message.mentions.push({tag: "@John Roy Lapida Calimlim", id: "100031810042802"});
+                        if(newParticipant.userFbId == botID1) {
+                            message1.body = `Hi, I am SnoopBot. Thank you for having me as the ${toOrdinalNumber(participants1.length)} member of "${threadName1}".\n\n`;
+                            message1.body += `Type ${settings1.prefix}help to see the list  of available commands. Please remember to not spam the bot to avoid the bot from being muted by fb. Thank you for your kind understanding! <3\n\n~Author: @John Roy Lapida Calimlim`;
+                            message1.mentions.push({tag: "@John Roy Lapida Calimlim", id: "100031810042802"});
 
                             // Set bot's nickname
-                            api.changeNickname("SnoopBot", event.threadID, botID, (err) => {
+                            api.changeNickname("SnoopBot", event.threadID, botID1, (err) => {
                                 if(err) return console.error(err);
                             });
                             break;
                         }
 
                         // Don't greet if auto greet is disabled in this thread's settings
-                        if(!settings.autoGreetEnabled)
+                        if(!settings1.autoGreetEnabled)
                             return;
 
                         let firstName = newParticipant.firstName;
                         let id = newParticipant.userFbId;
-                        message.body = `Welcome @${firstName}, you are the ${toOrdinalNumber(participants.length)} member of "${threadName}"!\n\nWe hope that we'll know about you better and we'd have a great friendship ahead.`;
-                        message.mentions.push({id, tag: `@${firstName}`});
+                        message1.body = `Welcome @${firstName}, you are the ${toOrdinalNumber(participants1.length)} member of "${threadName1}"!\n\nWe hope that we'll know about you better and we'd have a great friendship ahead.`;
+                        message1.mentions.push({id, tag: `@${firstName}`});
                     }
 
-                    api.sendMessage(message, event.threadID);
+                    api.sendMessage(message1, event.threadID);
                 break;
 
                 case "log:unsubscribe": // Someone left the gc
@@ -99,12 +99,12 @@ module.exports = (next) => {
                         return;
 
                     // Get settings for this specific thread
-                    let settingsList = openSettings();
-                    if(settingsList.threads[event.threadID] === undefined)
-                        settingsList.threads[event.threadID] = settingsList.defaultSettings;
+                    let settingsList2 = openSettings();
+                    if(settingsList2.threads[event.threadID] === undefined)
+                        settingsList2.threads[event.threadID] = settingsList2.defaultSettings;
                     
-                    saveSettings(settingsList);
-                    let settings = settingsList.threads[event.threadID];
+                    saveSettings(settingsList2);
+                    let settings2 = settingsList2.threads[event.threadID];
                     
                     let threadName = thread2.threadName;
                     let participants = thread2.userInfo;
@@ -119,7 +119,7 @@ module.exports = (next) => {
                             break;
 
                         // Don't greet if auto greet is disabled in this thread's settings
-                        if(!settings.autoGreetEnabled)
+                        if(!settings2.autoGreetEnabled)
                             return;
 
                         let firstName = newParticipant.firstName;
