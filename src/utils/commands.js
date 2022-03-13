@@ -61,8 +61,8 @@ const init = ( option = {} ) => {
                 });
 
 				settingsList = openSettings();
-				const threadSettings = settingsList.threads[event.threadID];
-				prefix = threadSettings.prefix ?? "$";
+				const threadSettings = settingsList.threads[event.threadID] ?? settingsList.defaultSettings;
+				prefix = threadSettings.prefix;
 				
 				commands.forEach((command) => {
 					if(typeof (command.callback) === "function" && event.body !== undefined) {
