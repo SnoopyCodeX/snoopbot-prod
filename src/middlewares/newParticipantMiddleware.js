@@ -118,9 +118,9 @@ module.exports = (next) => {
                     // Don't greet if auto greet is disabled in this thread's settings
                     if(!settings2.autoGreetEnabled)
                         return;
-
+ 
                     let user = await api.getUserInfo(leftParticipantFbId);
-                    let name = user.name;
+                    let name = user[leftParticipantFbId].name;
                     message.body = `Farewell @${name}, the whole ${threadName} will be awaiting for your return!\n\nGoodbye for now and may you have a blessed day ahead! <3`;
                     message.mentions.push({id: leftParticipantFbId, tag: `@${name}`});
 
