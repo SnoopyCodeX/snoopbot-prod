@@ -24,7 +24,7 @@ const settings = async (matches, event, api, extras) => {
             api.sendMessage(`❌Invalid option for '${userSetting}', option should be of type boolean (true or false)!`, event.threadID, event.messageID);
             return;
         } else if(isBool(settings[userSetting]) && isBool(option)) {
-            settingsList.threads[event.theadID][userSetting] = stringToBoolean(option);
+            settingsList.threads[event.threadID][userSetting] = stringToBoolean(option);
             saveSettings(settingsList);
 
             api.sendMessage(`✔SnoopBot's setting for '${userSetting}' has been set to ${option}.`, event.threadID, event.messageID);
