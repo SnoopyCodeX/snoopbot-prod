@@ -21,12 +21,19 @@ commands.addCommandMiddleware(
     permissionMiddleware,
 );
 
-commands.add(command.settings, {
-	params: '((^settings\\s(.*)\\s(.*))|(^settings\\slist))',
-	usage:  "settings <bot settings | list> <(true|false) | char>",
-	description: "Updates or lists bot's settings",
+commands.add(command.settings.settings, {
+	params: '^settings\\s(.*)\\s(.*)',
+	usage:  "settings <bot settings> <option>",
+	description: "Updates bot's settings from the current thread",
 	name: "settings",
 	hasArgs: true
+});
+
+commands.add(command.settings.list, {
+	params: '^settings\\slist\\s?(.*)?',
+	usage:  "settings list",
+	description: "Lists bot's settings from the current thread",
+	name: "settings-list"
 });
 
 commands.add(command.download.tiktok, {

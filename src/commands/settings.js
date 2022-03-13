@@ -1,14 +1,18 @@
 const fs = require("fs");
 const configs = require("../../configs");
 
-module.exports = async (matches, event, api, extras) => {
+const settings = async (matches, event, api, extras) => {
     const settingsList = JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
     const settings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
+    const userSetting = matches[1];
+    const option = matches[2];
 
-    console.log(matches);
-
-    // if user wants to list all the settings of this thread
-    if(matches.length == 1) {
-        
-    }
+    console.log(settings);
 };
+
+
+const list = async (matches, event, api, extras) => {
+    console.log(matches);
+};
+
+module.exports = {settings, list};
