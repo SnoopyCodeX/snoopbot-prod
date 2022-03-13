@@ -36,8 +36,9 @@ const openSettings = () => {
 
 module.exports = (next) => {
 	return async (matches, event, api, extra) => {
-
-		if(event.type == "event") {
+        console.log(event);
+        
+		if(event.type === "event") {
             switch(event.logMessageType) {
                 case "log:subscribe": // Someone joined the gc
                     // Get thread info
