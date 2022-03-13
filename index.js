@@ -3,6 +3,7 @@ const commands = require("./src/utils/commands");
 const command = require("./src/commands/allCommands");
 
 const permissionMiddleware = require("./src/middlewares/permissionMiddleware");
+const newParticipantMiddleware = require("./src/middlewares/newParticipantMiddleware");
 const joinOrLeaveMiddleware = require("./src/middlewares/joinOrLeaveMiddleware");
 const antiUnsendMiddleware = require("./src/middlewares/antiUnsendMiddleware");
 const commandValidatorMiddleware = require("./src/middlewares/commandValidatorMiddleware");
@@ -10,6 +11,7 @@ const commandValidatorMiddleware = require("./src/middlewares/commandValidatorMi
 commands.init({...configs, selfListen: true, handleMatches: true});
 
 commands.addEventMiddleware(
+	newParticipantMiddleware,
     antiUnsendMiddleware
 );
 
@@ -19,9 +21,17 @@ commands.addCommandMiddleware(
     permissionMiddleware,
 );
 
+commands.add(command.settings, {
+	params: '((^settings\\s(.*)\\=(.*))|(^settings\\slist))',
+	usage:  "settings <bot settings | list> <(true|false) | char>",
+	description: "Updates or lists bot's settings",
+	name: "settings",
+	hasArgs: true
+});
+
 commands.add(command.download.tiktok, {
 	params: '^downloadTiktok\\s?(.*)?',
-	usage: configs.DEFAULT_PREFIX + "downloadTiktok <tiktok-video-url>",
+	usage: "downloadTiktok <tiktok-video-url>",
 	description: "Downloads videos from the tiktok",
 	name: "downloadTiktok",
 	hasArgs: true
@@ -29,7 +39,7 @@ commands.add(command.download.tiktok, {
 
 commands.add(command.play, {
 	params: '^play\\s?(.*)?',
-	usage: configs.DEFAULT_PREFIX + "play <song title>",
+	usage: "play <song title>",
 	description: "Plays a song from youtube music and returns the lyrics of the song if there's any",
 	name: "play",
 	hasArgs: true
@@ -37,7 +47,7 @@ commands.add(command.play, {
 
 commands.add(command.wiki, {
 	params: '^wiki\\s?(.*)?',
-	usage: configs.DEFAULT_PREFIX + "wiki <query>",
+	usage: "wiki <query>",
 	description: "Send a search query to Wikipedia's API",
 	name: "wiki",
 	hasArgs: true
@@ -45,7 +55,7 @@ commands.add(command.wiki, {
 
 commands.add(command.translate, {
 	params: '^translate\\s(.*)\\sto\\s(.*)',
-	usage: configs.DEFAULT_PREFIX + "translate <phrase> to <language>",
+	usage: "translate <phrase> to <language>",
 	description: "Translates a phrase/word using Google Translate API",
 	name: "translate",
 	hasArgs: true
@@ -53,7 +63,7 @@ commands.add(command.translate, {
 
 commands.add(command.define, {
 	params: '^define\\s?(.*)?',
-	usage: configs.DEFAULT_PREFIX + "define <word>",
+	usage: "define <word>",
 	description: "Returns the definition of the word using Google Dictionary API",
 	name: "define",
 	hasArgs: true
@@ -61,35 +71,35 @@ commands.add(command.define, {
 
 commands.add(command.info, {
 	params: '^info\\s?(.*)?', 
-    usage: configs.DEFAULT_PREFIX + "info",
+    usage: "info",
     description: "Shows information about SnoopBot.",
     name: "info"
 });
 
 commands.add(command.help, {
     params: '^help\\s?(.*)?', 
-    usage: configs.DEFAULT_PREFIX + "help",
+    usage: "help",
     description: "Shows a list of available commands.",
     name: "help"
 });
 
 commands.add(command.join, {
 	params: '^join\\s?(.*)?',
-    usage: configs.DEFAULT_PREFIX + "join",
+    usage: "join",
     description: "Allows SnoopBot to respond to every commands in a conversation.",
     name: "join"
 });
 
 commands.add(command.leave, {
 	params: '^leave\\s?(.*)?', 
-    usage: configs.DEFAULT_PREFIX + "leave",
+    usage: "leave",
     description: "Prevents SnoopBot from responding to every commands in a conversation.",
     name: "leave"
 });
 
 commands.add(command.permission.grant, {
 	params: '^permission\\sgrant\\s([^@]+)\\s(.*)',
-	usage: configs.DEFAULT_PREFIX + "permission grant <all | command> <all | person-name>",
+	usage: "permission grant <all | command> <all | person-name>",
 	description: "Grants permission to all or a specific command to all members or specific member of a conversation.",
 	name: "permission-grant",
 	hasArgs: true
@@ -97,7 +107,7 @@ commands.add(command.permission.grant, {
 
 commands.add(command.permission.revoke, {
 	params: '^permission\\srevoke\\s([^@]+)\\s(.*)',
-	usage: configs.DEFAULT_PREFIX + "permission revoke <all | command> <all | person-name>",
+	usage: "permission revoke <all | command> <all | person-name>",
 	description: "Revokes permission to all or a specific command to all members or a specific member of a conversation.",
     name: "permission-revoke",
     hasArgs: true
@@ -105,7 +115,7 @@ commands.add(command.permission.revoke, {
 /*
 commands.add(command.permission.list, {
 	params: '^permission\\slist\\s([^@]+)\\s(.*)',
-	usage: configs.DEFAULT_PREFIX + "permission list <all | command> <all | person-name>",
+	usage: "permission list <all | command> <all | person-name>",
 	description: "Lists permissions that are granted to all or a specific member of a conversation.",
 	name: "permission-list",
 	hasArgs: true

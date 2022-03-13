@@ -10,6 +10,14 @@ let eventMiddlewares = [];
 
 let options = {};
 
+const saveSettings = (settings) => {
+    fs.writeFileSync(configs.APP_SETTINGS_LIST_FILE, JSON.stringify(settings, undefined, 4), {encoding: "utf8"});
+}
+
+const openSettings = () => {
+    JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
+}
+
 const add = (callback, option) => commands.push({callback, option});
 const list = () => commands.map((command) => command.option);
 
@@ -26,11 +34,12 @@ const init = ( option = {} ) => {
 	
 	try {
 		const appState = JSON.parse(fs.readFileSync(options.APP_STATE_FILE, {encoding: "utf8"}));
+		let settingsList = openSettings();
 		
 		login({ appState }, (err, api) => {
 			if(err) return console.error(err);
 			
-			const prefix = options.DEFAULT_PREFIX;
+			let prefix = settingsList.defaultSettings.prefix;
 			const enableAntiUnsend = options.ENABLE_ANTI_UNSEND !== undefined ? options.ENABLE_ANTI_UNSEND : false;
 			const enableAutoGreet = options.ENABLE_AUTO_GREET !== undefined ? options.ENABLE_AUTO_GREET : false;
 			
@@ -49,6 +58,10 @@ const init = ( option = {} ) => {
                 global.eventsQueue.enqueue(async () => {
                    await pipeline([...eventMiddlewares, eventCallback], event, api);
                 });
+
+				settingsList = openSettings();
+				const threadSettings = settingsList.threads[event.threadID];
+				prefix = threadSettings.prefix;
 				
 				commands.forEach((command) => {
 					if(typeof (command.callback) === "function" && event.body !== undefined) {

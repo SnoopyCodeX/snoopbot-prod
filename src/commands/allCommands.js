@@ -8,6 +8,7 @@ const wiki = require("./wiki");
 const translate = require("./translate");
 const define = require("./define");
 const play = require("./play");
+const settings = require("./settings");
 
 module.exports = {
 	info,
@@ -19,5 +20,6 @@ module.exports = {
 	wiki,
 	translate,
 	define,
-	play
+	play,
+	settings
 };

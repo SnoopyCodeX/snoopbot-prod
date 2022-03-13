@@ -1,0 +1,7 @@
+{
+    "defaultSettings": {
+        "prefix": "$",
+        "antiUnsendEnabled": true
+    },
+    "threads": {}
+}

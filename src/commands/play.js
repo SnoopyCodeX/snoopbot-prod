@@ -81,7 +81,7 @@ const getYTMusic = async (song) => {
 		let _id = "";
 		
 		let songs = contents.map((content) => {
-            let _song = {name: content.name, videoId: content.videoId};
+            let _song = {name: content.name, videoId: content.videoId, author: content.author};
             return _song;
         });
         
@@ -131,7 +131,7 @@ const player = async (matches, event, api, extra) => {
     let msg = {body};
     let path = `./temps/${title.replace(/\s/g, '-')}.mp3`;
     
-    api.sendMessage(`💽 Found:\n\n ${title} \n\n💽 Downloading...`, event.threadID, event.messageID);
+    api.sendMessage(`💽 Found:\n\n ${title} by ${songYTRequest.author} \n\n💽 Downloading...`, event.threadID, event.messageID);
     
     cloudscraper.get({uri: downloadURL, encoding: null})
         .then((buffer) => fs.writeFileSync(path, buffer))
