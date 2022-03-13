@@ -7,8 +7,6 @@ module.exports = (next) => {
 		const settingsList = JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
 		const settings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
 		const prefix = settings.prefix;
-		
-		console.log(settings);
 
 		if(sentPrefix !== prefix)
 		    return;

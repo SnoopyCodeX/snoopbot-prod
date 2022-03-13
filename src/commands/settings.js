@@ -37,7 +37,7 @@ const settings = async (matches, event, api, extras) => {
             saveSettings(settingsList);
         }
 
-        api.sendMessage(`✔SnoopBot's setting for:\n\n'${userSetting}'\n\nhas been set to:\n\n'${option}.'`, event.threadID, event.messageID);
+        api.sendMessage(`✔SnoopBot's setting for:\n\n'${userSetting}'\n\nhas been set to:\n\n'${option}'.`, event.threadID, event.messageID);
         return;
     }
 
@@ -46,7 +46,22 @@ const settings = async (matches, event, api, extras) => {
 
 
 const list = async (matches, event, api, extras) => {
-    console.log(matches);
+    const settingsList = JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
+    const settings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
+
+    if(matches[1] !== undefined) {
+        api.sendMessage(`❌Invalid use of command: '${settings.prefix}settings list'.`, event.threadID, event.messageID);
+        return;
+    }
+
+    const thread = await api.getThreadInfo(event.threadID);
+    let message = `⚙ Settings for\n\n${thread.threadName}:\n\n`;
+    let counter = 1;
+
+    for(let setting in settings) 
+        message += `${counter++}. ${setting}: ${settings[setting]}\n`;
+
+    api.sendMessage(message, event.threadID, event.messageID);
 };
 
 module.exports = {settings, list};
