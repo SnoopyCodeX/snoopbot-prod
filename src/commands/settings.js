@@ -59,7 +59,7 @@ const list = async (matches, event, api, extras) => {
     let counter = 1;
 
     for(let setting in settings) 
-        message += `${counter++}. ${setting}: ${settings[setting]}\n`;
+        message += `${counter++}. ${setting}: ${settings[setting]}\n\n`;
 
     api.sendMessage(message, event.threadID, event.messageID);
 };
