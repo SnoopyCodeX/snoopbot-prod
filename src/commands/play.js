@@ -20,18 +20,18 @@ const DiceCoefficient = require("../utils/dice_coefficient");
 *  @param  options.bitrate  ->  Bitrate conversion (Default: 320kbps)
 *  @param  options.type  ->  Type of conversion  (Default: mp3)
 */
-const getDownloadUrl = async (videoId, options = {bitrate: 320, type: 'mp3', title: ''}) => {
-	let serverURL = "https://api.vevioz.com";
+const getDownloadUrl = async (videoId, options = {type: 'mp3', title: ''}) => {
+	let serverURL = "https://api.vevioz.com/api/button";
 	
-	let downloadURL = await axios.get(`${serverURL}/?v=${videoId}&type=${options.type}&bitrate=${options.bitrate}`)
+	let downloadURL = await axios.get(`${serverURL}/${options.type}/${videoId}`)
 	    .then(response => {
 		    let $ = cheerio.load(response.data);
-		    let div = $("div#mediaDownload")[0];
-		    let lst = div.children[1].children[1].children[1];
-		    let title = div.attribs['data-yt-title'];
-		    let tag = lst.attribs['data-mp3-tag'];
+		    let a = $("div.download > a")['0'];
+		    let href = a.attribs.href;
 		
-		    return `${serverURL}/download/${tag}/${options.title || title}.mp3`;
+		    console.log(href);
+		    console.log(a);
+		    return href;
 		}).catch((err) => {
 			console.log(err);
 			
