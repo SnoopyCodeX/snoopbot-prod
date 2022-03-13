@@ -40,11 +40,11 @@ module.exports = (next) => {
             switch(event.logMessageType) {
                 case "log:subscribe": // Someone joined the gc
                     // Get thread info
-                    const thread = await api.getThreadInfo(event.threadID);
+                    const thread1 = await api.getThreadInfo(event.threadID);
 
                     // Check if this thread is a Group (more than 2 members)
                     // Ignore this thread if this is not a group
-                    if(!thread.isGroup)
+                    if(!thread1.isGroup)
                         return;
 
                     // Get settings for this specific thread
@@ -55,8 +55,8 @@ module.exports = (next) => {
                     saveSettings(settingsList);
                     let settings = settingsList.threads[event.threadID];
                     
-                    let threadName = thread.threadName;
-                    let participants = thread.userInfo;
+                    let threadName = thread1.threadName;
+                    let participants = thread1.userInfo;
                     let addedParticipants = event.logMessageData.addedParticipants;
                     let botID = await api.getCurrentUserID();
                     let message = {mentions: [], body: ""};
@@ -91,11 +91,11 @@ module.exports = (next) => {
 
                 case "log:unsubscribe": // Someone left the gc
                     // Get thread info
-                    const thread = await api.getThreadInfo(event.threadID);
+                    const thread2 = await api.getThreadInfo(event.threadID);
 
                     // Check if this thread is a Group (more than 2 members)
                     // Ignore this thread if this is not a group
-                    if(!thread.isGroup)
+                    if(!thread2.isGroup)
                         return;
 
                     // Get settings for this specific thread
@@ -106,8 +106,8 @@ module.exports = (next) => {
                     saveSettings(settingsList);
                     let settings = settingsList.threads[event.threadID];
                     
-                    let threadName = thread.threadName;
-                    let participants = thread.userInfo;
+                    let threadName = thread2.threadName;
+                    let participants = thread2.userInfo;
                     let addedParticipants = event.logMessageData.addedParticipants;
                     let botID = await api.getCurrentUserID();
                     let message = {mentions: [], body: ""};
