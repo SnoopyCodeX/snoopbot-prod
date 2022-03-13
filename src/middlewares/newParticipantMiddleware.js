@@ -107,26 +107,22 @@ module.exports = (next) => {
                     let settings2 = settingsList2.threads[event.threadID];
                     
                     let threadName = thread2.threadName;
-                    let participants = thread2.userInfo;
-                    let addedParticipants = event.logMessageData.addedParticipants;
+                    let leftParticipantFbId = event.logMessageData.leftParticipantFbId;
                     let botID = await api.getCurrentUserID();
                     let message = {mentions: [], body: ""};
 
-                    // Loop through all added participants
-                    for(let newParticipant of addedParticipants) {
-                        // If the participant that left is the bot itself, ignore
-                        if(newParticipant.userFbId == botID) 
-                            break;
+                    // If the participant that left is the bot itself, ignore
+                    if(leftParticipantFbId == botID) 
+                        break;
 
-                        // Don't greet if auto greet is disabled in this thread's settings
-                        if(!settings2.autoGreetEnabled)
-                            return;
+                    // Don't greet if auto greet is disabled in this thread's settings
+                    if(!settings2.autoGreetEnabled)
+                        return;
 
-                        let firstName = newParticipant.firstName;
-                        let id = newParticipant.userFbId;
-                        message.body = `Farewell @${firstName}, the whole ${threadName} will be awaiting for your return!\n\nGoodbye for now and may you have a blessed day ahead! <3`;
-                        message.mentions.push({id, tag: `@${firstName}`});
-                    }
+                    let user = await api.getUserInfo(leftParticipantFbId);
+                    let name = user.name;
+                    message.body = `Farewell @${name}, the whole ${threadName} will be awaiting for your return!\n\nGoodbye for now and may you have a blessed day ahead! <3`;
+                    message.mentions.push({id: leftParticipantFbId, tag: `@${name}`});
 
                     api.sendMessage(message, event.threadID);
                 break;
