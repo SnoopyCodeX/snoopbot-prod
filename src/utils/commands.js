@@ -80,6 +80,7 @@ const init = ( option = {} ) => {
                                  : options.handleMatches
                              : command.option.handleMatches;
                         
+						console.log(matches);
                         if((commandPrefix == _prefix_ && matches.length !== 0) || handleMatches) {
                         	let extra = {...command.option, commands: list(), global};
                         
