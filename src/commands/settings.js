@@ -33,12 +33,11 @@ const settings = async (matches, event, api, extras) => {
             if(settingsList.threads[event.threadID] === undefined)
                 settingsList.threads[event.threadID] = settings;
 
-            settingsList.threads[event.threadID][userSetting] = stringToBoolean(option);
+            settingsList.threads[event.threadID][userSetting] = option;
             saveSettings(settingsList);
         }
 
         api.sendMessage(`✔SnoopBot's setting for:\n\n'${userSetting}'\n\nhas been set to:\n\n'${option}.'`, event.threadID, event.messageID);
-
         return;
     }
 
