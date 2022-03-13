@@ -1,5 +1,5 @@
 const fs = require("fs");
-const configs = require("../../configs");
+const configs = require("../../configs.js");
 
 const toOrdinalNumber = (number) => {
     let _strNumber = `${number}`;
