@@ -60,7 +60,7 @@ module.exports = (next) => {
                     let threadName = thread.threadName;
                     let participants = thread.userInfo;
                     let addedParticipants = event.logMessageData.addedParticipants;
-                    let botID = await api.getCurrentUserId();
+                    let botID = await api.getCurrentUserID();
                     let message = {mentions: [], body: ""};
 
                     // Loop through all added participants
