@@ -92,6 +92,6 @@ module.exports = (next) => {
             }
         }
         
-        await next(matches, event, api, extra);
+        await next(event, api);
 	};
 };
