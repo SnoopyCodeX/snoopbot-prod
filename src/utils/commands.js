@@ -60,8 +60,6 @@ const init = ( option = {} ) => {
 				settingsList = openSettings();
 				const threadSettings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
 				prefix = threadSettings.prefix;
-
-				console.log(`Prefix: ${prefix}`);
 				
 				commands.forEach((command) => {
 					if(typeof (command.callback) === "function" && event.body !== undefined) {
@@ -82,7 +80,6 @@ const init = ( option = {} ) => {
                         
                         if((commandPrefix == _prefix_ && matches.length !== 0) || handleMatches) {
                         	let extra = {...command.option, commands: list(), global};
-							console.log(matches);
                         
                             const commandCallback = () => {
                                 return async (matches, event, api, extra) => {

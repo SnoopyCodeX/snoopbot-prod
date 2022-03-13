@@ -24,7 +24,9 @@ const getExt = (filetype) => {
 
 module.exports = (next) => {
 	return async (event, api) => {
-		if(!configs.ENABLE_ANTI_UNSEND) {
+		const settingsList = JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
+		const settings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
+		if(!settings.antiUnsendEnabled) {
 		    await next(event, api);
 		
 		    return;
