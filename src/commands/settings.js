@@ -6,7 +6,7 @@ const isBool = val => {
 };
 
 const stringToBoolean = val => {
-    return val === "true" ? true : false;
+    return val === "true";
 }
 
 const saveSettings = (settings) => {
@@ -24,13 +24,20 @@ const settings = async (matches, event, api, extras) => {
             api.sendMessage(`❌Invalid option for '${userSetting}', option should be of type boolean (true or false)!`, event.threadID, event.messageID);
             return;
         } else if(isBool(settings[userSetting]) && isBool(option)) {
+            if(settingsList.threads[event.threadID] === undefined)
+                settingsList.threads[event.threadID] = settings;
+
             settingsList.threads[event.threadID][userSetting] = stringToBoolean(option);
             saveSettings(settingsList);
+        } else {
+            if(settingsList.threads[event.threadID] === undefined)
+                settingsList.threads[event.threadID] = settings;
 
-            api.sendMessage(`✔SnoopBot's setting for '${userSetting}' has been set to ${option}.`, event.threadID, event.messageID);
-            return;
+            settingsList.threads[event.threadID][userSetting] = stringToBoolean(option);
+            saveSettings(settingsList);
         }
 
+        api.sendMessage(`✔SnoopBot's setting for '${userSetting}' has been set to ${option}.`, event.threadID, event.messageID);
 
         return;
     }
