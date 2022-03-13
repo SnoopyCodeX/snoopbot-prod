@@ -24,13 +24,21 @@ const getExt = (filetype) => {
 
 module.exports = (next) => {
 	return async (event, api) => {
+		// Check if anti unsent is enabled in this thread's settings
 		const settingsList = JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
 		const settings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
 		if(!settings.antiUnsendEnabled) {
 		    await next(event, api);
-		
 		    return;
 	    }
+
+		// Check if this thread is whitelisted
+		let threadWhitelist = JSON.parse(fs.readFileSync(configs.APP_THREAD_WHITELIST_FILE, {encoding: "utf8"}));
+		let adminWhitelist = JSON.parse(fs.readFileSync(configs.APP_PERMISSION_FILE, {encoding: "utf8"}));
+        if(!threadWhitelist.threads.includes(event.threadID)) {
+			await next(event, api);
+		    return;
+		}
 		
 		let jsonString = fs.readFileSync(configs.APP_PERMISSION_FILE, {encoding: "utf8"});
 		let admins = JSON.parse(jsonString);

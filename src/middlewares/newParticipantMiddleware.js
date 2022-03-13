@@ -76,7 +76,7 @@ module.exports = (next) => {
                             break;
                         }
 
-                        // Don't greet if auto greet is disabled
+                        // Don't greet if auto greet is disabled in this thread's settings
                         if(!settings.autoGreetEnabled)
                             return;
 
