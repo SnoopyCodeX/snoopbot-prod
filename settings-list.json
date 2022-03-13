@@ -1,7 +1,8 @@
 {
     "defaultSettings": {
         "prefix": "$",
-        "antiUnsendEnabled": true
+        "antiUnsendEnabled": true,
+        "autoGreetEnabled": true
     },
     "threads": {}
 }

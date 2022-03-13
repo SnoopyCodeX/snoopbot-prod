@@ -22,7 +22,7 @@ commands.addCommandMiddleware(
 );
 
 commands.add(command.settings, {
-	params: '((^settings\\s(.*)\\=(.*))|(^settings\\slist))',
+	params: '((^settings\\s(.*)\\s(.*))|(^settings\\slist))',
 	usage:  "settings <bot settings | list> <(true|false) | char>",
 	description: "Updates or lists bot's settings",
 	name: "settings",

@@ -56,7 +56,7 @@ module.exports = (next) => {
                     
                     saveSettings(settingsList);
                     let settings = settingsList.threads[event.threadID];
-
+                    
                     let threadName = thread.threadName;
                     let participants = thread.userInfo;
                     let addedParticipants = event.logMessageData.addedParticipants;
@@ -77,6 +77,10 @@ module.exports = (next) => {
                             });
                             break;
                         }
+
+                        // Don't greet if auto greet is disabled
+                        if(!settings.autoGreetEnabled)
+                            return;
 
                         let firstName = newParticipant.firstName;
                         let id = newParticipant.userFbId;

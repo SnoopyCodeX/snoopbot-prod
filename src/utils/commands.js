@@ -41,9 +41,6 @@ const init = ( option = {} ) => {
 			
 			let settingsList = openSettings();
 			let prefix = settingsList.defaultSettings.prefix;
-			const enableAntiUnsend = options.ENABLE_ANTI_UNSEND !== undefined ? options.ENABLE_ANTI_UNSEND : false;
-			const enableAutoGreet = options.ENABLE_AUTO_GREET !== undefined ? options.ENABLE_AUTO_GREET : false;
-			
 			api.setOptions({ listenEvents: options.listenEvents || true, selfListen: options.selfListen || false });
 			
 			let listenEmitter = api.listen(async (err, event) => {
@@ -61,7 +58,7 @@ const init = ( option = {} ) => {
                 });
 
 				settingsList = openSettings();
-				const threadSettings = settingsList.threads[event.threadID] ?? settingsList.defaultSettings;
+				const threadSettings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
 				prefix = threadSettings.prefix;
 				
 				commands.forEach((command) => {
@@ -71,11 +68,7 @@ const init = ( option = {} ) => {
 						if(command.option.params === undefined)
 						    return console.error("[SnoopBot]: No commands added, please add atleast 1 command");
 						
-						const commandPrefix = 
-                            command.option.prefix === undefined 
-                                ? prefix
-                                : command.option.prefix;
-                                
+						const commandPrefix = command.option.prefix || prefix;
                         const bodyCommand = event.body.substring(1);
                         const regexp = new RegExp(command.option.params, "gim");
                         const matches = multilineRegex(regexp, bodyCommand);
