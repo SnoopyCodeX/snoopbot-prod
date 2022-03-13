@@ -35,9 +35,9 @@ const openSettings = () => {
 }
 
 module.exports = (next) => {
-	return async (matches, event, api, extra) => {
+	return async (event, api) => {
         console.log(event);
-        
+
 		if(event.type === "event") {
             switch(event.logMessageType) {
                 case "log:subscribe": // Someone joined the gc
