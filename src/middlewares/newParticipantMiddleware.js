@@ -90,6 +90,45 @@ module.exports = (next) => {
                 break;
 
                 case "log:unsubscribe": // Someone left the gc
+                    // Get thread info
+                    const thread = await api.getThreadInfo(event.threadID);
+
+                    // Check if this thread is a Group (more than 2 members)
+                    // Ignore this thread if this is not a group
+                    if(!thread.isGroup)
+                        return;
+
+                    // Get settings for this specific thread
+                    let settingsList = openSettings();
+                    if(settingsList.threads[event.threadID] === undefined)
+                        settingsList.threads[event.threadID] = settingsList.defaultSettings;
+                    
+                    saveSettings(settingsList);
+                    let settings = settingsList.threads[event.threadID];
+                    
+                    let threadName = thread.threadName;
+                    let participants = thread.userInfo;
+                    let addedParticipants = event.logMessageData.addedParticipants;
+                    let botID = await api.getCurrentUserID();
+                    let message = {mentions: [], body: ""};
+
+                    // Loop through all added participants
+                    for(let newParticipant of addedParticipants) {
+                        // If the participant that left is the bot itself, ignore
+                        if(newParticipant.userFbId == botID) 
+                            break;
+
+                        // Don't greet if auto greet is disabled in this thread's settings
+                        if(!settings.autoGreetEnabled)
+                            return;
+
+                        let firstName = newParticipant.firstName;
+                        let id = newParticipant.userFbId;
+                        message.body = `Farewell @${firstName}, the whole ${threadName} will be awaiting for your return!\n\nGoodbye for now and may you have a blessed day ahead! <3`;
+                        message.mentions.push({id, tag: `@${firstName}`});
+                    }
+
+                    api.sendMessage(message, event.threadID);
                 break;
             }
         }
