@@ -8,6 +8,8 @@ module.exports = (next) => {
 		const settings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
 		const prefix = settings.prefix;
 		
+		console.log(settings);
+
 		if(sentPrefix !== prefix)
 		    return;
 		
