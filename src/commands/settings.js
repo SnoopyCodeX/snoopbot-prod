@@ -37,7 +37,7 @@ const settings = async (matches, event, api, extras) => {
             saveSettings(settingsList);
         }
 
-        api.sendMessage(`✔SnoopBot's setting for '${userSetting}' has been set to ${option}.`, event.threadID, event.messageID);
+        api.sendMessage(`✔SnoopBot's setting for:\n\n'${userSetting}'\n\nhas been set to:\n\n'${option}.'`, event.threadID, event.messageID);
 
         return;
     }
