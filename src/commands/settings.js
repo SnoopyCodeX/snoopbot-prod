@@ -7,7 +7,7 @@ const settings = async (matches, event, api, extras) => {
     const userSetting = matches[1];
     const option = matches[2];
 
-    console.log(settings);
+    console.log(matches);
 };
 
 
