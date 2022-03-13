@@ -16,7 +16,7 @@ const saveSettings = (settings) => {
 }
 
 const openSettings = () => {
-    JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
+    return JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
 }
 
 const add = (callback, option) => commands.push({callback, option});
