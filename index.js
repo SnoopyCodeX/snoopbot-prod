@@ -1,3 +1,4 @@
+const configs = require("./configs.js");
 const commands = require("./src/utils/commands");
 const command = require("./src/commands/allCommands");
 
