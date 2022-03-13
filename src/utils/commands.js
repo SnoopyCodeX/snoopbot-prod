@@ -35,11 +35,11 @@ const init = ( option = {} ) => {
 	
 	try {
 		const appState = JSON.parse(fs.readFileSync(options.APP_STATE_FILE, {encoding: "utf8"}));
-		let settingsList = openSettings();
 		
 		login({ appState }, (err, api) => {
 			if(err) return console.error(err);
 			
+			let settingsList = openSettings();
 			let prefix = settingsList.defaultSettings.prefix;
 			const enableAntiUnsend = options.ENABLE_ANTI_UNSEND !== undefined ? options.ENABLE_ANTI_UNSEND : false;
 			const enableAutoGreet = options.ENABLE_AUTO_GREET !== undefined ? options.ENABLE_AUTO_GREET : false;
