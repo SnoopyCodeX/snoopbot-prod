@@ -1,18 +1,12 @@
 const googleTTS = require('google-tts-api');
-const googleTTSLanguages = require("google-tts-languages");
+const googleTTSLanguages = require("../utils/google-tts-languages");
 const configs = require("../../configs");
 const cloudscraper = require("cloudscraper");
 const fs = require("fs");
 
 const openSettings = () => JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
 
-const isLanguageValid = (language) => (Object.entries(googleTTSLanguages.findByName(language)).length > 0 || Object.entries(googleTTSLanguages.findByCode(language)) > 0);
-const toLanguageCode = (language) => {
-    let byCode = googleTTSLanguages.findByCode(language);
-    let byName = googleTTSLanguages.findByName(language);
-
-    return Object.entries(byCode) > 0 ? byCode.code : byName.code;
-};
+const isLanguageValid = (language) => (Object.entries(googleTTSLanguages.find(language)).length > 0);
 
 const say = async (matches, event, api, extra) => {
     const settingsList = openSettings();
@@ -27,7 +21,7 @@ const say = async (matches, event, api, extra) => {
     }
 
     const url = googleTTS.getAudioUrl(wordOrPhrase, {
-        lang: toLanguageCode(language),
+        lang: googleTTSLanguages.find(language).code,
         slow: false,
         host: 'https://translate.google.com',
     });
