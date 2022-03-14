@@ -1,23 +1,17 @@
 const googleTTS = require('google-tts-api');
+const googleTTSLanguages = require("google-tts-languages");
 const configs = require("../../configs");
-const axios = require("axios");
+const cloudscraper = require("cloudscraper");
 const fs = require("fs");
-const cheerio = require("cheerio");
 
 const openSettings = () => JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
 
-const isLanguageValid = async (language) => {
-    let isValid = false;
+const isLanguageValid = (language) => (Object.entries(googleTTSLanguages.findByName(language)).length > 0 || Object.entries(googleTTSLanguages.findByCode(languages)) > 0);
+const toLanguageCode = (language) => {
+    let byCode = googleTTSLanguages.findByCode(language);
+    let byName = googleTTSLanguages.findByName(language);
 
-    let languages = await axios.get("https://translate.google.com").then(response => {
-        // Wrap cheerio
-        let $ = cheerio.load(response.data);
-        let divs = $('body > c-wiz > div:first-child > div:nth-child(1) > c-wiz > div:nth-child(1) > c-wiz > div:first-child > div:first-child > c-wiz > div:nth-child(1) > c-wiz > div:first-child > div:first-child > div:nth-child(2) > div:first-child > div:nth-child(2)');
-
-        console.log(divs)
-    });
-
-    return isValid;
+    return Object.entries(byCode) > 0 ? byCode.code : byName.code;
 };
 
 const say = async (matches, event, api, extra) => {
@@ -27,13 +21,40 @@ const say = async (matches, event, api, extra) => {
     const language = matches[1];
     const wordOrPhrase = matches[2];
 
-    isLanguageValid(language);
+    if(!isLanguageValid(language)) {
+        api.sendMessage(`❌ Invalid language used, type ${settings.prefix}say languages-list to see the list of supported languages.`, event.threadID, event.messageID);
+        return;
+    }
 
     const url = googleTTS.getAudioUrl(wordOrPhrase, {
-        lang: language,
+        lang: toLanguageCode(language),
         slow: false,
         host: 'https://translate.google.com',
     });
+    const path = "./temps/say.mp3";
+    const msg = {};
+
+    if(url === undefined) {
+        api.sendMessage(`❌ Failed to generate speech syntesis for the phrase/word:\n\n${wordOrPhrase}\n\nPlease try using a different language.`, event.threadID, event.messageID);
+        return;
+    }
+
+    cloudscraper.get({uri: url, encoding: null})
+        .then(buffer => fs.writeFileSync(path, buffer))
+        .then(response => {
+            msg.body = "✔ Successfully generated into a speech synthesis!";
+            msg.attachment = fs.createReadStream(path).on("end", async () => {
+		        if(fs.existsSync(path)) {
+			        fs.unlink(path, (err) => {
+				        if(err) return console.log(err);
+				
+				        console.log("Deleted file: " + path);
+			        });
+		        }
+	        });
+	
+	        api.sendMessage(msg, event.threadID, event.messageID);
+        });
 };
 
 module.exports = say;

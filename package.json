@@ -41,6 +41,7 @@
     "request": "^2.88.2",
     "streamifier": "^0.1.1",
     "youtube-music-api": "^1.0.6",
-    "google-tts-api": "^2.0.2"
+    "google-tts-api": "^2.0.2",
+    "google-tts-languages": "^1.0.4"
   }
 }
