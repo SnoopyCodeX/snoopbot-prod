@@ -32,7 +32,6 @@
   "dependencies": {
     "axios": "^0.22.0",
     "cheerio": "^1.0.0-rc.10",
-    "cheerio-advanced-selectors": "^2.0.1",
     "cloudscraper": "^4.6.0",
     "fca-unofficial": "^1.3.10",
     "googlethis": "^1.2.7",
