@@ -14,8 +14,8 @@ const isLanguageValid = async (language) => {
         // Wrap cheerio
         cheerio = cheerioAdv.wrap(cheerio);
         let $ = cheerio.load(response.body);
-        let divs = $('c-wiz > div > div:eq(1) > c-wiz > div:eq(1) > c-wiz > div:first > div:first > c-wiz > div:eq(1) > div:first > div:eq(2) > div:first > div:eq(1)');
-        console.log(divs.children);
+        //let divs = $('c-wiz > div > div:eq(1) > c-wiz > div:eq(1) > c-wiz > div:first > div:first > c-wiz > div:eq(1) > div:first > div:eq(2) > div:first > div:eq(1)');
+        console.log(response.body);
     });
 
     return isValid;
