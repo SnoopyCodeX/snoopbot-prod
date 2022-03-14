@@ -36,6 +36,14 @@ commands.add(command.settings.list, {
 	name: "settings-list"
 });
 
+commands.add(command.say, {
+	params: '^say\\s(.*)\\s(.*)',
+	usage:  "say <language> <word/phrase>",
+	description: "Sends an audio recording of the word/phrase",
+	name: "say",
+	hasArgs: true
+});
+
 commands.add(command.download.tiktok, {
 	params: '^downloadTiktok\\s?(.*)?',
 	usage: "downloadTiktok <tiktok-video-url>",
