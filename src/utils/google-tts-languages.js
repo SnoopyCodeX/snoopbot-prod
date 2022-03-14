@@ -110,7 +110,12 @@ const _languages = [
 ];
   
 function find(language) {
-    return _languages.find(l => ((l.code.toLowerCase() === language.toLowerCase()) || (l.name.toLowerCase() === language.toLowerCase())));
+	for(let lan of _languages) {
+		if(lan.name.toLowerCase() === language || lan.code.toLowerCase() === language)
+		    return lan;
+	}
+	
+	return undefined;
 }
 
 function list() {
