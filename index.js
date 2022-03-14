@@ -36,10 +36,18 @@ commands.add(command.settings.list, {
 	name: "settings-list"
 });
 
-commands.add(command.say, {
+commands.add(command.say.say, {
 	params: '^say\\s(.*)\\s(.*)',
 	usage:  "say <language> <word/phrase>",
 	description: "Sends an audio recording of the word/phrase",
+	name: "say",
+	hasArgs: true
+});
+
+commands.add(command.say.list, {
+	params: '\\b(say languages-list)\\b',
+	usage:  "say languages-list",
+	description: "Lists all the supported text-to-speech languages",
 	name: "say",
 	hasArgs: true
 });

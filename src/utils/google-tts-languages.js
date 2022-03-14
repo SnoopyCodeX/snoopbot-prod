@@ -108,7 +108,7 @@ const _languages = [
     { code: "yo",          name: "Yoruba" }, 
     { code: "zu",          name: "Zulu" }, 
 ];
-  
+
 function find(language) {
 	for(let lan of _languages) {
 		if(lan.name.toLowerCase() === language || lan.code.toLowerCase() === language)
