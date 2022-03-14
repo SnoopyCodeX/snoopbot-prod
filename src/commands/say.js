@@ -12,8 +12,8 @@ const isLanguageValid = async (language) => {
 
     let languages = await axios.get("https://translate.google.com").then(response => {
         // Wrap cheerio
-        cheerio = cheerioAdv.wrap(cheerio);
-        let $ = cheerio.load(response.body);
+        // cheerio = cheerioAdv.wrap(cheerio);
+        // let $ = cheerio.load(response.body);
         //let divs = $('c-wiz > div > div:eq(1) > c-wiz > div:eq(1) > c-wiz > div:first > div:first > c-wiz > div:eq(1) > div:first > div:eq(2) > div:first > div:eq(1)');
         console.log(response.body);
     });
