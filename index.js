@@ -37,7 +37,7 @@ commands.add(command.settings.list, {
 });
 
 commands.add(command.say.say, {
-	params: '^say\\s(.*)\\s(.*)',
+	params: '^say\\s([wW]+)\\s([wW]+)',
 	usage:  "say <language> <word/phrase>",
 	description: "Sends an audio recording of the word/phrase",
 	name: "say",
