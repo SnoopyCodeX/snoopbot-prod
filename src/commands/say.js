@@ -14,6 +14,8 @@ const say = async (matches, event, api, extra) => {
 
     const language = matches[1];
     const wordOrPhrase = matches[2];
+    
+    console.log(matches);
 
     if(!isLanguageValid(language)) {
         api.sendMessage(`❌ Invalid language used! Type: \n\n${settings.prefix}say languages-list\n\nTo see the list of supported languages.`, event.threadID, event.messageID);
