@@ -12,7 +12,7 @@ const isLanguageValid = async (language) => {
     let languages = await axios.get("https://translate.google.com").then(response => {
         // Wrap cheerio
         let $ = cheerio.load(response.data);
-        let divs = $('body > c-wiz > div:first-child > div:nth-child(1) > c-wiz > div:nth-child(1) > c-wiz > div:first-child > div:first-child > c-wiz > div:nth-child(1) > c-wiz > div:first-child > div:first-child > div:nth-child(2) > div:first-child > div:nth-child(2) > div[tabindex=0]');
+        let divs = $('body > c-wiz > div:first-child > div:nth-child(1) > c-wiz > div:nth-child(1) > c-wiz > div:first-child > div:first-child > c-wiz > div:nth-child(1) > c-wiz > div:first-child > div:first-child > div:nth-child(2) > div:first-child > div:nth-child(2)');
 
         console.log(divs)
     });
