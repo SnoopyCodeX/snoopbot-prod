@@ -28,7 +28,7 @@ const say = async (matches, event, api, extra) => {
     const language = matches[1];
     const wordOrPhrase = matches[2];
 
-    isValid(language);
+    isLanguageValid(language);
 
     const url = googleTTS.getAudioUrl(wordOrPhrase, {
         lang: language,
