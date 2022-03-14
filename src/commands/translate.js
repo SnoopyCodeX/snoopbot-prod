@@ -13,7 +13,14 @@ const translate = async (from, to) => {
 	return await google.search(`translate ${from} to ${to}`, options);
 };
 
+const openSettings = () => {
+    return JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
+}
+
 module.exports = async (matches, event, api, extra) => {
+	let settingsList = openSettings();
+    let settings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
+
 	let from = matches[1];
 	let to = matches[2];
 	
@@ -21,7 +28,7 @@ module.exports = async (matches, event, api, extra) => {
 		let stopTyping = api.sendTypingIndicator(event.threadID, (err) => {
 			if(err) return console.log(err);
 			
-			api.sendMessage(`⚠️ Invalid usage of command: '${configs.DEFAULT_PREFIX}translate'\n\nUsage: ${extra.usage}`, event.threadID, event.messageID);
+			api.sendMessage(`⚠️ Invalid usage of command: '${settings.prefix}translate'\n\nUsage: ${extra.usage}`, event.threadID, event.messageID);
 			stopTyping();
 		});
 		

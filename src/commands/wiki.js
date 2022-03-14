@@ -9,7 +9,14 @@ const searchWiki = async (query) => {
     return request;
 }
 
+const openSettings = () => {
+    return JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
+}
+
 module.exports = async (matches, event, api, extra) => {
+	let settingsList = openSettings();
+    let settings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
+
 	let query = matches[1];
 	console.log(matches);
 	
@@ -17,7 +24,7 @@ module.exports = async (matches, event, api, extra) => {
 		let stopTyping = api.sendTypingIndicator(event.threadID, (err) => {
 			if(err) return console.log(err);
 			
-			api.sendMessage(`⚠️ Invalid use of command: '${configs.DEFAULT_PREFIX}wiki'\n\nUsage: ${extra.usage}`, event.threadID, event.messageID);
+			api.sendMessage(`⚠️ Invalid use of command: '${settings.prefix}wiki'\n\nUsage: ${extra.usage}`, event.threadID, event.messageID);
 			stopTyping();
 		});
 		

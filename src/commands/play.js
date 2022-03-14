@@ -92,11 +92,18 @@ const getYTMusic = async (song) => {
 	return music;
 };
 
+const openSettings = () => {
+    return JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
+}
+
 const player = async (matches, event, api, extra) => {
+	let settingsList = openSettings();
+    let settings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
+
 	let songQuery = matches[1]; 
 	
 	if(songQuery === undefined) {
-		api.sendMessage(`🛑 Invalid usage of command: ${configs.DEFAULT_PREFIX}play\n\nUsage: ${extra.usage}`, event.threadID, event.messageID);
+		api.sendMessage(`🛑 Invalid usage of command: ${settings.prefix}play\n\nUsage: ${extra.usage}`, event.threadID, event.messageID);
 		return;
 	}
 	
@@ -110,7 +117,7 @@ const player = async (matches, event, api, extra) => {
 	// Indicate the song author if there's any
 	let ytSongQuery = songQuery;
 	if(songQuery.indexOf("by") === -1)
-	    ytSongQuery = `${songQuery} ${author.replace(/\b(Song )\b/g, "")}`;
+	    ytSongQuery = `${songQuery} ${author?.replace(/\b(Song )\b/g, "")}`;
 	
 	// Search the song on youtube and get download url
 	let songYTRequest = await getYTMusic(ytSongQuery);
@@ -131,7 +138,7 @@ const player = async (matches, event, api, extra) => {
     let msg = {body};
     let path = `./temps/${title.replace(/\s/g, '-')}.mp3`;
     
-    api.sendMessage(`💽 Found:\n\n ${title} by ${songYTRequest.author} \n\n💽 Downloading...`, event.threadID, event.messageID);
+    api.sendMessage(`💽 Found:\n\n ${title} by ${author === "" ? songYTRequest.author : author} \n\n💽 Downloading...`, event.threadID, event.messageID);
     
     cloudscraper.get({uri: downloadURL, encoding: null})
         .then((buffer) => fs.writeFileSync(path, buffer))

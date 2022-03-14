@@ -82,7 +82,7 @@ module.exports = (next) => {
 
                         let firstName = newParticipant.firstName;
                         let id = newParticipant.userFbId;
-                        message1.body = `Welcome @${firstName}, you are the ${toOrdinalNumber(participants1.length)} member of "${threadName1}"!\n\nWe hope that we'll know about you better and we'd have a great friendship ahead.`;
+                        message1.body = `Welcome @${firstName}, you are the ${toOrdinalNumber(participants1.length)} member of "${threadName1}"!\n\nPlease follow the rules and regulations of this group, respect all members and admins.\n\nWe hope that we'll know about you better and we'd have a great friendship ahead. <3`;
                         message1.mentions.push({id, tag: `@${firstName}`});
                     }
 

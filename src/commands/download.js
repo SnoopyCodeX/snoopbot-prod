@@ -11,12 +11,18 @@ const tiktokDownloader = async (link) => {
     return out;
 };
 
+const openSettings = () => {
+    return JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
+}
+
 const tiktok = async (matches, event, api, extra) => {
+	let settingsList = openSettings();
+    let settings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
 	let url = matches[1];
 	
 	if(url === undefined) {
 		let stopTyping = api.sendTypingIndicator(event.threadID, (err) => {
-			api.sendMessage(`⚠️ Invalid use of command: '${configs.DEFAULT_PREFIX}downloadTiktok'\nUsage: ${extra.usage}`, event.threadID, event.messageID);
+			api.sendMessage(`⚠️ Invalid use of command: '${settings.prefix}downloadTiktok'\nUsage: ${extra.usage}`, event.threadID, event.messageID);
 			stopTyping();
         });
         

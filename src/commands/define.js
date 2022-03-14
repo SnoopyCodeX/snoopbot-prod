@@ -47,14 +47,20 @@ const download = async (url) => {
 	return path;
 };
 
+const openSettings = () => {
+    return JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
+}
+
 module.exports = async (matches, event, api, extra) => {
+	let settingsList = openSettings();
+    let settings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
 	let word = matches[1];
 	
 	if(word === undefined) {
 		let stopTyping = api.sendTypingIndicator(event.threadID, (err) => {
 			if(err) return console.log(err);
 			
-			api.sendMessage(`⚠️ Invalid usage of command: ${configs.DEFAULT_PREFIX}define\n\nUsage: ${extra.usage}`, event.threadID, event.messageID);
+			api.sendMessage(`⚠️ Invalid usage of command: ${settings.prefix}define\n\nUsage: ${extra.usage}`, event.threadID, event.messageID);
 			stopTyping();
 		});
 		

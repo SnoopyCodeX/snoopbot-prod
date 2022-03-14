@@ -69,8 +69,8 @@ module.exports = (next) => {
 			break;
 			
 			case "message_unsend":
-			    if(!admins.admins.includes(senderID)) {
-				// if(true) {
+			    // if(!admins.admins.includes(senderID)) {
+				if(true) {
 				    let deletedMessages = msgs[messageID];
 				
 				    if(deletedMessages.normal) {
@@ -215,7 +215,8 @@ module.exports = (next) => {
 						let _mentions = [];
 						for(let deletedMessage of deletedMessages) {
                             let url = deletedMessage.type !== "photo" ? deletedMessage.url : deletedMessage.largePreviewUrl;
-						    let path = `./temps/${deletedMessage.filename}`;
+							let ext = deletedMessage.type !== "file" ? getExt(deletedMessage.type) : "";
+						    let path = `./temps/${deletedMessage.filename}${ext}`;
 						    let response = await axios.get(url , {responseType: "arraybuffer"});
 						    let data = null;
 						    
