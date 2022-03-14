@@ -6,7 +6,7 @@ const fs = require("fs");
 
 const openSettings = () => JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
 
-const isLanguageValid = (language) => (Object.entries(googleTTSLanguages.find(language)).length > 0);
+const isLanguageValid = (language) => (googleTTSLanguages.find(language) !== undefined);
 
 const say = async (matches, event, api, extra) => {
     const settingsList = openSettings();
