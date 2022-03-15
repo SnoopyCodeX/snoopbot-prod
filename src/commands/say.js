@@ -31,14 +31,14 @@ const say = async (matches, event, api, extra) => {
     const msg = {};
 
     if(url === undefined) {
-        api.sendMessage(`❌ Failed to generate speech syntesis for the phrase/word:\n\n${wordOrPhrase}\n\nPlease try using a different language.`, event.threadID, event.messageID);
+        api.sendMessage(`❌ Failed to generate speech synthesis for the phrase/word:\n\n${wordOrPhrase}\n\nPlease try using a different language.`, event.threadID, event.messageID);
         return;
     }
 
     cloudscraper.get({uri: url, encoding: null})
         .then(buffer => fs.writeFileSync(path, buffer))
         .then(response => {
-            msg.body = `✔ Successfully generated a speech syntesis for the phrase/word:\n\n${wordOrPhrase}`;
+            msg.body = `✔ Successfully generated a speech synthesis!\n\nLanguage: ${googleTTSLanguages.find(language).name}`;
             msg.attachment = fs.createReadStream(path).on("end", async () => {
 		        if(fs.existsSync(path)) {
 			        fs.unlink(path, (err) => {

@@ -138,7 +138,7 @@ const player = async (matches, event, api, extra) => {
     let msg = {body};
     let path = `./temps/${title.replace(/\s/g, '-')}.mp3`;
     
-    api.sendMessage(`💽 Found:\n\n ${title} by ${author === "" ? songYTRequest.author : author} \n\n💽 Downloading...`, event.threadID, event.messageID);
+    api.sendMessage(`💽 Found:\n\n ${title} by ${author === "" ? `${songYTRequest.author || "Unknown Artist"}` : author} \n\n💽 Downloading...`, event.threadID, event.messageID);
     
     cloudscraper.get({uri: downloadURL, encoding: null})
         .then((buffer) => fs.writeFileSync(path, buffer))
