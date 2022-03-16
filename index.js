@@ -48,7 +48,7 @@ commands.add(command.say.list, {
 	params: '\\b(say languages-list)\\b',
 	usage:  "say languages-list",
 	description: "Lists all the supported text-to-speech languages",
-	name: "say",
+	name: "say languages-list",
 	hasArgs: true
 });
 
