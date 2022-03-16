@@ -7,7 +7,7 @@ const newParticipantMiddleware = require("./src/middlewares/newParticipantMiddle
 const joinOrLeaveMiddleware = require("./src/middlewares/joinOrLeaveMiddleware");
 const antiUnsendMiddleware = require("./src/middlewares/antiUnsendMiddleware");
 const commandValidatorMiddleware = require("./src/middlewares/commandValidatorMiddleware");
-
+ 
 commands.init({...configs, selfListen: true, handleMatches: true});
 
 commands.addEventMiddleware(
