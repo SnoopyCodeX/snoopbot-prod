@@ -70,6 +70,9 @@ const init = ( option = {} ) => {
 						
 						const commandPrefix = command.option.prefix || prefix;
                         const bodyCommand = event.body.substring(prefix.length);
+						
+						bodyCommand = bodyCommand.replace(/\n/g, " ");
+						
                         const regexp = new RegExp(command.option.params, "gim");
                         const matches = multilineRegex(regexp, bodyCommand);
                         const handleMatches = command.option.handleMatches === undefined
