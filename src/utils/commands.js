@@ -69,7 +69,7 @@ const init = ( option = {} ) => {
 						    return console.error("[SnoopBot]: No commands added, please add atleast 1 command");
 						
 						const commandPrefix = command.option.prefix || prefix;
-                        const bodyCommand = event.body.substring(1);
+                        const bodyCommand = event.body.substring(prefix.length);
                         const regexp = new RegExp(command.option.params, "gim");
                         const matches = multilineRegex(regexp, bodyCommand);
                         const handleMatches = command.option.handleMatches === undefined
