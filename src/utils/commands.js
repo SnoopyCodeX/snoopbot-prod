@@ -69,7 +69,7 @@ const init = ( option = {} ) => {
 						    return console.error("[SnoopBot]: No commands added, please add atleast 1 command");
 						
 						const commandPrefix = command.option.prefix || prefix;
-                        const bodyCommand = event.body.substring(prefix.length);
+                        let bodyCommand = event.body.substring(prefix.length);
 						
 						bodyCommand = bodyCommand.replace(/\n/g, " ");
 						
