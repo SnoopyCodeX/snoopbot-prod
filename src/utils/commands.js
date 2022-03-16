@@ -63,7 +63,7 @@ const init = ( option = {} ) => {
 				
 				commands.forEach((command) => {
 					if(typeof (command.callback) === "function" && event.body !== undefined) {
-						const _prefix_ = event.body.substring(0, 1);
+						const _prefix_ = event.body.substring(0, prefix.length);
 						
 						if(command.option.params === undefined)
 						    return console.error("[SnoopBot]: No commands added, please add atleast 1 command");
