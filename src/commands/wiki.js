@@ -1,4 +1,5 @@
 const axios = require("axios");
+const cloudscraper = require("cloudscraper");
 const configs = require("../../configs");
 const fs = require("fs");
 
@@ -16,7 +17,7 @@ const openSettings = () => {
 
 module.exports = async (matches, event, api, extra) => {
 	let settingsList = openSettings();
-    let settings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
+  let settings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
 
 	let query = matches[1];
 	console.log(matches);
@@ -51,10 +52,32 @@ module.exports = async (matches, event, api, extra) => {
 	definition += `💡 Info: \n  ${response.extract || 'none'}\n\n`;
 	definition += 'Source: https://en.wikipedia.org';
 	
+	let hasImage = (response.originalimage !== undefined) && (response.originalimage.source !== undefined);
+	let path = `./temps/${query}.jpg`;
+	let msg = {body: definition};
+	
+	if(hasImage) {
+	  let url = response.originalimage.source;
+	  
+	  await cloudscraper.get({uri: url, encoding: null})
+	    .then((buffer) => fs.writeFileSync(path, buffer))
+	}
+	
 	let stopTyping = api.sendTypingIndicator(event.threadID, (err) => {
 		if(err) return console.log(err);
 		
-		api.sendMessage(definition, event.threadID, event.messageID);
+		if(hasImage)
+		  msg.attachment = fs.createReadStream(path).on("end", async () => {
+		    if(fs.existsSync(path)) {
+		      fs.unlink(path, (err) => {
+		        if(err) console.log(err);
+		        
+		        console.log(`Deleted file: ${path}`);
+		      });
+		    }
+		  });
+		
+		api.sendMessage(msg, event.threadID, event.messageID);
 		stopTyping();
 	});
 }
