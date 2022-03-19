@@ -135,6 +135,7 @@ commands.add(command.permission.revoke, {
     name: "permission-revoke",
     hasArgs: true
 });
+
 /*
 commands.add(command.permission.list, {
 	params: '^permission\\slist\\s([^@]+)\\s(.*)',

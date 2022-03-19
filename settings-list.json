@@ -1,14 +1,8 @@
 {
     "defaultSettings": {
-        "prefix": "_",
-        "antiUnsendEnabled": true,
+        "prefix": "/",
+        "antiUnsendEnabled": false,
         "autoGreetEnabled": true
     },
-    "threads": {
-        "4699051006857054": {
-            "prefix": "/",
-            "antiUnsendEnabled": true,
-            "autoGreetEnabled": true
-        }
-    }
+    "threads": {}
 }

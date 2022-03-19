@@ -14,12 +14,12 @@ const translate = async (from, to) => {
 };
 
 const openSettings = () => {
-    return JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
+  return JSON.parse(fs.readFileSync(configs.APP_SETTINGS_LIST_FILE, {encoding: "utf8"}));
 }
 
 module.exports = async (matches, event, api, extra) => {
 	let settingsList = openSettings();
-    let settings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
+  let settings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
 
 	let from = matches[1];
 	let to = matches[2];
