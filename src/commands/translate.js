@@ -1,5 +1,6 @@
 const google = require("googlethis");
 const configs = require("../../configs");
+const fs = require("fs");
 
 const translate = async (from, to) => {
 	let options = {
