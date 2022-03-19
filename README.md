@@ -24,8 +24,8 @@ using **NodeJS** and the **Unofficial Facebook Chat API**.
 - [x] `/settings <settings> <option>` : Updates bot's settings in a current thread.
 - [x] `/settings list` : Lists the current settings of the bot in a current thread.
 ### Credits
-- (@Jerson Carin)[https://github.com/jersnet]
-- (@Unofficial FCA)[https://github.com/VangBanLaNhat/fca-unofficial]
+- [@Jerson Carin](https://github.com/jersnet)
+- [@Unofficial FCA](https://github.com/VangBanLaNhat/fca-unofficial)
 ### Disclaimer
 ```
 This bot is made for educational purposes only!
