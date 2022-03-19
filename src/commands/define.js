@@ -53,7 +53,7 @@ const openSettings = () => {
 
 module.exports = async (matches, event, api, extra) => {
 	let settingsList = openSettings();
-    let settings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
+  let settings = settingsList.threads[event.threadID] || settingsList.defaultSettings;
 	let word = matches[1];
 	
 	if(word === undefined) {

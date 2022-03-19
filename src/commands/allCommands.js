@@ -10,6 +10,7 @@ const define = require("./define");
 const play = require("./play");
 const settings = require("./settings");
 const say = require("./say");
+const ris = require("./ris");
 
 module.exports = {
 	info,
@@ -23,5 +24,6 @@ module.exports = {
 	define,
 	play,
 	settings,
-	say
+	say,
+	ris
 };

@@ -17,6 +17,7 @@ using **NodeJS** and the **Unofficial Facebook Chat API**.
 - [x] `/play <song title>` : Sends an audio of the song and the lyrics of the song to the convo.
 - [x] `/define <word>` : Sends the definition of the word.
 - [x] `/wiki <query>` : Searches the wiki for your query.
+- [x] `/ris <Optional: image-url>` : Performs a Reverse Image Search.
 - [x] `/join` : Allows the bot to respond to commands that are sent by non-admin users in a thread.
 - [x] `/leave` : Tells the bot to ignore all commands that are sent by non-admin users in a thread.
 - [x] `/permission grant <command | all> <@person | @all>` : Grants permission to all or a specific command to all or a specific person.

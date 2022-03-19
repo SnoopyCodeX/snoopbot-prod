@@ -36,8 +36,16 @@ commands.add(command.settings.list, {
 	name: "settings-list"
 });
 
+commands.add(command.ris, {
+  params: '^ris\\s?((http[s]?:\\/\\/(www\\.)?){1}([0-9A-Za-z-\\.@:%_\\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(\\/(.)*)?(\\?(.)*)?)?',
+  usage: "ris <optional: image url>",
+  description: "Performs a reverse image search",
+  name: "ris",
+  hasArgs: true
+});
+
 commands.add(command.say.say, {
-	params: '^say\\s(\\w+[\\-|\\w]+)\\s(.*)',
+	params: '^say\\s(\\w|\\W)+\\s(.*)',
 	usage:  "say <language> <word/phrase>",
 	description: "Sends an audio recording of the word/phrase",
 	name: "say",
