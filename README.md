@@ -12,8 +12,8 @@ using **NodeJS** and the **Unofficial Facebook Chat API**.
 - [x] `/info` : Displays info about SnoopBot.
 - [x] `/say <language> <phrase>` : Sends an audio synthesis of the phrase.
 - [x] `/say languages-list` : Lists all the supported languages.
-- [x] `/translate <phrase or word> to <language>`` : Translates a phrase or word to a specified language.
-- [x] `/downloadTiktok <tiktok video url>`` : Downloads a tiktok video from the specified tiktok url.
+- [x] `/translate <phrase or word> to <language>` : Translates a phrase or word to a specified language.
+- [x] `/downloadTiktok <tiktok video url>` : Downloads a tiktok video from the specified tiktok url.
 - [x] `/play <song title>` : Sends an audio of the song and the lyrics of the song to the convo.
 - [x] `/define <word>` : Sends the definition of the word.
 - [x] `/wiki <query>` : Searches the wiki for your query.
@@ -24,8 +24,8 @@ using **NodeJS** and the **Unofficial Facebook Chat API**.
 - [x] `/settings <settings> <option>` : Updates bot's settings in a current thread.
 - [x] `/settings list` : Lists the current settings of the bot in a current thread.
 ### Credits
-- @(Jerson Carin)[https://github.com/jersnet]
-- @(Unofficial FCA)[https://github.com/VangBanLaNhat/fca-unofficial]
+- (@Jerson Carin)[https://github.com/jersnet]
+- (@Unofficial FCA)[https://github.com/VangBanLaNhat/fca-unofficial]
 ### Disclaimer
 ```
 This bot is made for educational purposes only!
