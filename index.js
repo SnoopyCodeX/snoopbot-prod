@@ -12,34 +12,27 @@ commands.init({...configs, selfListen: true, handleMatches: true});
 
 commands.addEventMiddleware(
 	newParticipantMiddleware,
-    antiUnsendMiddleware
+  antiUnsendMiddleware
 );
 
 commands.addCommandMiddleware(
-    joinOrLeaveMiddleware,
-    commandValidatorMiddleware,
-    permissionMiddleware,
+  joinOrLeaveMiddleware,
+  commandValidatorMiddleware,
+  permissionMiddleware,
 );
 
-commands.add(command.settings.settings, {
-	params: '^settings\\s(.*)\\s(.*)',
-	usage:  "settings <bot settings> <option>",
-	description: "Updates bot's settings from the current thread",
-	name: "settings",
-	hasArgs: true
-});
-
-commands.add(command.settings.list, {
-	params: '^settings\\slist\\s?(.*)?',
-	usage:  "settings list",
-	description: "Lists bot's settings from the current thread",
-	name: "settings-list"
+commands.add(command.imageSearch, {
+  params: '^imageSearch\\s(.*)',
+  usage: 'imageSearch <query>',
+  description: 'Search for images in google',
+  name: 'imageSearch',
+  hasArgs: true
 });
 
 commands.add(command.ris, {
   params: '^ris\\s?((http[s]?:\\/\\/(www\\.)?){1}([0-9A-Za-z-\\.@:%_\\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(\\/(.)*)?(\\?(.)*)?)?',
   usage: "ris <optional: image url>",
-  description: "Performs a reverse image search",
+  description: "Performs a reverse image search\n\nNote: When you reply this command to an image message, you do not need to specify an image url.",
   name: "ris",
   hasArgs: true
 });
@@ -142,6 +135,21 @@ commands.add(command.permission.revoke, {
 	description: "Revokes permission to all or a specific command to all members or a specific member of a conversation.",
     name: "permission-revoke",
     hasArgs: true
+});
+
+commands.add(command.settings.settings, {
+	params: '^settings\\s(.*)\\s(.*)',
+	usage:  "settings <bot settings> <option>",
+	description: "Updates bot's settings from the current thread",
+	name: "settings",
+	hasArgs: true
+});
+
+commands.add(command.settings.list, {
+	params: '^settings\\slist\\s?(.*)?',
+	usage:  "settings list",
+	description: "Lists bot's settings from the current thread",
+	name: "settings-list"
 });
 
 /*

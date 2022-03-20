@@ -18,6 +18,7 @@ using **NodeJS** and the **Unofficial Facebook Chat API**.
 - [x] `/define <word>` : Sends the definition of the word.
 - [x] `/wiki <query>` : Searches the wiki for your query.
 - [x] `/ris <Optional: image-url>` : Performs a Reverse Image Search.
+- [x] `/imageSearch <query>` : Search for images in google.
 - [x] `/join` : Allows the bot to respond to commands that are sent by non-admin users in a thread.
 - [x] `/leave` : Tells the bot to ignore all commands that are sent by non-admin users in a thread.
 - [x] `/permission grant <command | all> <@person | @all>` : Grants permission to all or a specific command to all or a specific person.
