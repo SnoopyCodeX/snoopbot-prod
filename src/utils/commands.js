@@ -101,7 +101,7 @@ const init = ( option = {} ) => {
 	}
 };
 
-process.on("uncaughtException", (err) => console.log("[SnoopBot]: ", err.message));
+process.on("uncaughtException", (err) => console.log("[SnoopBot]: ", err));
 
 module.exports = {
 	add,

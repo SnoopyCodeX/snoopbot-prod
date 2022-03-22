@@ -4,5 +4,11 @@
         "antiUnsendEnabled": false,
         "autoGreetEnabled": true
     },
-    "threads": {}
+    "threads": {
+        "4258445860907644": {
+            "prefix": "/",
+            "antiUnsendEnabled": false,
+            "autoGreetEnabled": true
+        }
+    }
 }
