@@ -1,12 +1,17 @@
 const fs = require("fs");
 const configs = require("../../configs.js");
+const adminUtils = require("./adminUtils");
 
 const userHasPermission = (threadID, userID, ...commands) => {
 	let jsonString = fs.readFileSync(configs.APP_PERMISSION_FILE, {encoding: "utf8"});
 	let permissions = JSON.parse( jsonString === "" ? "{}" : jsonString);
+	
+	let adminWhitelist = adminUtils.getAdminsFromThread(threadID);
+	let admins = adminWhitelist.hasError ? [] : adminWhitelist.admins;
+	
 	let hasPermission = false;
 	
-	if(permissions.admins.includes(userID))
+	if(admins.includes(userID) || (userID === adminWhitelist.botOwner))
 	    return true;
 	
 	if(permissions[threadID] !== undefined) {
@@ -46,7 +51,7 @@ const grant = (threadID, userID, ...commands) => {
 };
 
 const revoke = (threadID, userID, ...commands) => {
-    let jsonString = fs.readFileSync(configs.APP_PERMISSION_FILE, {encoding: "utf8"});
+  let jsonString = fs.readFileSync(configs.APP_PERMISSION_FILE, {encoding: "utf8"});
 	let permissions = JSON.parse( jsonString === "" ? "{}" : jsonString);
 	
 	if(permissions[threadID] === undefined 

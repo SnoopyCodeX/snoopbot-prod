@@ -61,7 +61,7 @@ const list = async (matches, event, api, extra) => {
     let msg = {};
 
     for(let language of googleTTSLanguages.list())
-        body += `📄 ${language.name}\nCode: ${language.code}\n\n`;
+        body += `📄 ${language.name} (${language.code})\n\n`;
     body += "❤ Made by @John Roy Lapida Calimlim";
 
     msg.body = body;

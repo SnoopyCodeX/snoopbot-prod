@@ -218,8 +218,8 @@ const listPin = async (threadID) => {
   for(let pinnedMsg in pinnedMessages) {
     list += `Name: ${pinnedMsg}\n`;
     
-    if(pinnedMessages[pinnedMsg].length > 0)
-      list += `Content:\n\n ${pinnedMessages[pinnedMsg].body}\n`;
+    if(pinnedMessages[pinnedMsg].body.length > 0)
+      list += `Message:\n\n ${pinnedMessages[pinnedMsg].body}\n`;
     
     list += `\nSent by: @${pinnedMessages[pinnedMsg].sender.name}\nAttachments: ${pinnedMessages[pinnedMsg].attachmentTypes}\n--------------------\n\n`;
     
@@ -296,6 +296,7 @@ const pin = async (matches, event, api, extra) => {
     break;
     
     case "remove":
+    case "purge":
       if(name === undefined) {
         api.sendMessage("⚠️ Please specify the name of the pinned message that you want to remove", event.threadID, event.messageID);
         return;
@@ -304,11 +305,11 @@ const pin = async (matches, event, api, extra) => {
       let removed = await removePin(event.threadID, name);
       
       if(removed.hasError) {
-        api.sendMessage(`⚠️ ${removed.message}`, event.threadID, event.messageID);
+        api.sendMessage(`⚠️ ${action === "purge" ? removed.message.replace("remove", "purge") : removed.message}`, event.threadID, event.messageID);
         return;
       }
       
-      api.sendMessage(`🗑 Successfully removed ${name.toLowerCase() === "all" ? "all pinned messages of this thread!" : `"${name}" from this thread's pinned messages!`}`, event.threadID, event.messageID);
+      api.sendMessage(`🗑 Successfully ${action === "purge" ? "purged" : "removed"} ${name.toLowerCase() === "all" ? "all pinned messages of this thread!" : `"${name}" from this thread's pinned messages!`}`, event.threadID, event.messageID);
     break;
     
     case "list":

@@ -9,7 +9,10 @@ const antiUnsendMiddleware = require("./src/middlewares/antiUnsendMiddleware");
 const commandValidatorMiddleware = require("./src/middlewares/commandValidatorMiddleware");
 
 commands.init({
-  ...configs, selfListen: true, handleMatches: true
+  ...configs, 
+  selfListen: true, 
+  listenEvents: true, 
+  handleMatches: true
 });
 
 commands.addEventMiddleware(
@@ -23,6 +26,20 @@ commands.addCommandMiddleware(
   permissionMiddleware,
 );
 
+commands.add(command.info, {
+  params: '^info\\s?(.*)?',
+  usage: "info",
+  description: "Shows information about SnoopBot.",
+  name: "info"
+});
+
+commands.add(command.help, {
+  params: '^help\\s?(.*)?',
+  usage: "help",
+  description: "Shows a list of available commands.",
+  name: "help"
+});
+
 commands.add(command.imageSearch, {
   params: '^imageSearch\\s(.*)',
   usage: 'imageSearch <query>',
@@ -31,6 +48,7 @@ commands.add(command.imageSearch, {
   hasArgs: true
 });
 
+/* DISABLED FOR THE MEANTIME
 commands.add(command.ris, {
   params: '^ris\\s?((http[s]?:\\/\\/(www\\.)?){1}([0-9A-Za-z-\\.@:%_\\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(\\/(.)*)?(\\?(.)*)?)?',
   usage: "ris <optional: image url>",
@@ -38,9 +56,10 @@ commands.add(command.ris, {
   name: "ris",
   hasArgs: true
 });
+*/
 
 commands.add(command.say.say, {
-  params: '^say\\s(\\w|\\W)+\\s(.*)',
+  params: '^say\\s([^\\s]+)\\s(.*)',
   usage: "say <language> <word/phrase>",
   description: "Sends an audio recording of the word/phrase",
   name: "say",
@@ -95,56 +114,58 @@ commands.add(command.define, {
   hasArgs: true
 });
 
-commands.add(command.info, {
-  params: '^info\\s?(.*)?',
-  usage: "info",
-  description: "Shows information about SnoopBot.",
-  name: "info"
-});
+/** ADMIN COMMANDS **/
 
-commands.add(command.help, {
-  params: '^help\\s?(.*)?',
-  usage: "help",
-  description: "Shows a list of available commands.",
-  name: "help"
+commands.add(command.admin, {
+  params: '^admin\\s(promote|demote|list)\\s?(.*)?',
+  usage: 'admin <promote|demote|list> <@person [, @person, ..] | @all | @you>',
+  description: 'Promote/Demote users as administrator of this chat bot',
+  name: 'admin',
+  hasArgs: true,
+  adminOnly: true
 });
 
 commands.add(command.join, {
   params: '^join\\s?(.*)?',
   usage: "join",
   description: "Allows SnoopBot to respond to every commands in a conversation.",
-  name: "join"
+  name: "join",
+  adminOnly: true
 });
 
 commands.add(command.leave, {
   params: '^leave\\s?(.*)?',
   usage: "leave",
   description: "Prevents SnoopBot from responding to every commands in a conversation.",
-  name: "leave"
+  name: "leave",
+  adminOnly: true
 });
 
 commands.add(command.pin, {
-  params: '^pin\\s(add|get|remove|list)\\s?([\\w|\\W]+)?',
-  usage: 'pin <add|get|remove|list> <name of pin>',
+  params: '^pin\\s(add|get|purge|remove|list)\\s?([\\w|\\W]+)?',
+  usage: 'pin <add|get|purge|remove|list> <name of pin>',
   description: 'Pins a message in a certain thread',
   name: 'pin',
-  hasArgs: true
+  hasArgs: true,
+  adminOnly: true
 });
 
 commands.add(command.permission.grant, {
   params: '^permission\\sgrant\\s([^@]+)\\s(.*)',
-  usage: "permission grant <all | command> <all | person-name>",
+  usage: "permission grant <all | command> <@all | @you | @person-name>",
   description: "Grants permission to all or a specific command to all members or specific member of a conversation.",
   name: "permission-grant",
-  hasArgs: true
+  hasArgs: true,
+  adminOnly: true
 });
 
 commands.add(command.permission.revoke, {
   params: '^permission\\srevoke\\s([^@]+)\\s(.*)',
-  usage: "permission revoke <all | command> <all | person-name>",
+  usage: "permission revoke <all | command> <@all | @you | @person-name>",
   description: "Revokes permission to all or a specific command to all members or a specific member of a conversation.",
   name: "permission-revoke",
-  hasArgs: true
+  hasArgs: true,
+  adminOnly: true
 });
 
 commands.add(command.settings.settings, {
@@ -152,22 +173,25 @@ commands.add(command.settings.settings, {
   usage: "settings <bot settings> <option>",
   description: "Updates bot's settings from the current thread",
   name: "settings",
-  hasArgs: true
+  hasArgs: true,
+  adminOnly: true
 });
 
 commands.add(command.settings.list, {
   params: '^settings\\slist\\s?(.*)?',
   usage: "settings list",
   description: "Lists bot's settings from the current thread",
-  name: "settings-list"
+  name: "settings-list",
+  adminOnly: true
 });
 
-/*
+/* DISABLED FOR THE MEANTIME
 commands.add(command.permission.list, {
 	params: '^permission\\slist\\s([^@]+)\\s(.*)',
 	usage: "permission list <all | command> <all | person-name>",
 	description: "Lists permissions that are granted to all or a specific member of a conversation.",
 	name: "permission-list",
-	hasArgs: true
+	hasArgs: true,
+	adminOnly: true
 });
 */

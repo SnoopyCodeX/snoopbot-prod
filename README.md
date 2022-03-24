@@ -19,7 +19,9 @@ using **NodeJS** and the **Unofficial Facebook Chat API**.
 - [x] `/wiki <query>` : Searches the wiki for your query.
 - [x] `/ris <Optional: image-url>` : Performs a Reverse Image Search.
 - [x] `/imageSearch <query>` : Search for images in google.
-- [x] `/pin <add|remove|get|list> <name>` : Pin a message in a thread.
+- ** ADMIN COMMANDS **
+- [x] `/admin <promote|demote|list> <@person [, @person2, ..] | @you>` : Promote/Demote/List admins for this chatbot in a specific thread.
+- [x] `/pin <add|remove|purge|get|list> <name>` : Add/Remove/Get/List pinned message in a thread.
 - [x] `/join` : Allows the bot to respond to commands that are sent by non-admin users in a thread.
 - [x] `/leave` : Tells the bot to ignore all commands that are sent by non-admin users in a thread.
 - [x] `/permission grant <command | all> <@person | @all>` : Grants permission to all or a specific command to all or a specific person.

@@ -9,9 +9,23 @@ module.exports = async (matches, event, api, extra) => {
     let message = "📝 List of Commands\n\n";
     message += `⟩ Prefix: ${prefix}\n\n`;
     
+    extra.commands.sort((a, b) => a.name > b.name ? 1 : -1);
+    
     extra.commands.forEach((command) => {
-        message += `${prefix + command.usage}: ${command.description}\n\n`;
+      if(command.adminOnly)
+        return;
+      
+      message += `${prefix + command.usage}: ${command.description}\n\n`;
     });
+    
+    extra.commands.forEach((command) => {
+      if(command.adminOnly) {
+        if(!message.includes("** Admin Commands **"))
+          message += "** Admin Commands **\n\n";
+        
+        message += `${prefix + command.usage}: ${command.description}\n\n`;
+      }
+    })
     
     message += "© Made with ❤️ by John Roy L. Calimlim";
     api.sendMessage(message, event.threadID, event.messageID);
