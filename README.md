@@ -6,6 +6,7 @@ using **NodeJS** and the **Unofficial Facebook Chat API**.
 ### Automatic Bot Tasks
 - [x] **Unsend Detection** : Detects an unsent message or attachment and resends it back to the thread.
 - [x] **Auto Greet** : Sends a welcome or farewell message when a person joins or leaves a thread.
+
 ### Commands Available
 **Default Prefix**: /
 - [x] `/help` : Displays the list of all available commands in this bot.
@@ -19,7 +20,8 @@ using **NodeJS** and the **Unofficial Facebook Chat API**.
 - [x] `/wiki <query>` : Searches the wiki for your query.
 - [x] `/ris <Optional: image-url>` : Performs a Reverse Image Search.
 - [x] `/imageSearch <query>` : Search for images in google.
-- ** ADMIN COMMANDS **
+
+### Admin Commands
 - [x] `/admin <promote|demote|list> <@person [, @person2, ..] | @you>` : Promote/Demote/List admins for this chatbot in a specific thread.
 - [x] `/pin <add|remove|purge|get|list> <name>` : Add/Remove/Get/List pinned message in a thread.
 - [x] `/join` : Allows the bot to respond to commands that are sent by non-admin users in a thread.
@@ -28,9 +30,31 @@ using **NodeJS** and the **Unofficial Facebook Chat API**.
 - [x] `/permission revoke <command | all> <@person | @all>` : Revokes permission to all or a specific command to all or a specific person.
 - [x] `/settings <settings> <option>` : Updates bot's settings in a current thread.
 - [x] `/settings list` : Lists the current settings of the bot in a current thread.
+
+### Cloning
+- [x] Run `git clone https://github.com/SnoopyCodeX/snoopbot-prod` in your terminal
+- [x] Then type `cd snoopbot-prod`
+
+### Deploying Locally
+**Before anything**, you must create a facebook dummy account for your chatbot first.
+But this is only (**optional**), you could always use your main account but **I will not**
+**be responsible** if your account gets **banned** or **muted** by facebook.
+- [x] First, rename `.env.development` to `.env`
+- [x] Second, install [this extension](https://github.com/c3cbot/c3c-fbstate) to your chrome or kiwi(if you're using mobile phone)
+- [x] Third, open facebook in your chrome (or kiwi if you're using mobile phone) and login to your chatbot's account.
+- [x] Fourth, while you're on facebook, open the extension that you installed earlier on your chrome (or kiwi if you're using mobile phone).
+- [x] Copy the json string that is shown by the extension
+- [x] Then using an online json minifier tool, minify the json string that you copied
+- [x] Next, open `.env` file and put the value in `APPSTATE=`, **EG:** `APPSTATE='your minified json string here'` then save it.
+- [x] Lastly, open terminal in the chatbot's root directory where the `package.json` resides
+- [x] Run `npm install` to install all the dependencies of this chatbot **IF YOU HAVEN'T** ran this command yet
+- [x] Run `npm run dev` for development
+- [x] Run `npm run start` for production
+
 ### Credits
 - [@Jerson Carin](https://github.com/jersnet)
 - [@Unofficial FCA](https://github.com/VangBanLaNhat/fca-unofficial)
+
 ### Disclaimer
 ```
 This bot is made for educational purposes only!
