@@ -1,5 +1,5 @@
 # SnoopBot :robot:
-------------------
+
 **SnoopBot** is a **facebook messenger chatbot** that is made
 using **NodeJS** and the **Unofficial Facebook Chat API**.
 ------------------
@@ -52,7 +52,7 @@ But this is only (**optional**), you could always use your main account but **I 
 - [x] Run `npm run start` for production
 
 ### Credits
-- [@Jerson Carin](https://github.com/jersnet)
+- [@Jerson Carin](https://github.com/jersoncarin)
 - [@Unofficial FCA](https://github.com/VangBanLaNhat/fca-unofficial)
 
 ### Disclaimer
