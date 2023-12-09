@@ -2,6 +2,10 @@
 
 **SnoopBot** is a **facebook messenger chatbot** that is made
 using **NodeJS** and the **Unofficial Facebook Chat API**.
+
+## ⚠️ IMPORTANT NOTICE ⚠️
+> This project is no longer being maintained. Please consider migrating to [SnoopBot v2](https://github.com/SnoopyCodeX/snoopbot-v2). Thank you!
+
 ------------------
 ### Automatic Bot Tasks
 - [x] **Unsend Detection** : Detects an unsent message or attachment and resends it back to the thread.
